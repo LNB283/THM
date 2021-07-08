@@ -115,8 +115,9 @@
 ------------------------
 #### Task 4 - Privilege escalation
 - On the system, search for all SUID files. What file stands out?
-    - search SUUID availble
-    - find / -user root -perm -4000 -print 2>/dev/null (*THM command* : find / -user root -perm -4000 -exec ls -ldb {} \;)
+    - search SUID availble
+        - find / -user root -perm -4000 -print 2>/dev/null (*THM command* : find / -user root -perm -4000 -exec ls -ldb {} \;)
+        - picture: [Vulnversity_Privilege_escalation_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_1.png)
     - **Answer**: /bin/systemctl
 
 - Become root and get the last flag (/root/root.txt)
@@ -126,10 +127,12 @@
         - Copy the source code
         - Create a file root_escalate.service
         - Modify ExecStart and perform this action  "chmod +s /bin/bash"
+        - picture: [Vulnversity_Privilege_escalation_2.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_2.png)
         - Copy/paste the code. Press enter to complete the sequence and create the symlink.
     - Verify if the right of /bin/bash changed
         - ls -l /bin/bash
-        - Result : -rwsr-sr-x 1 root root 1037528 May 16  2017 /bin/bash
+        - Result : picture: [Vulnversity_Privilege_escalation_3.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_3.png)
     - Run the command bash -p and become root
     - Move to /root and open root.txt
+        - picture: [Vulnversity_Privilege_escalation_4.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_4.png)
     - **Answer**: a58ff8579f0a9270368d33a9966c7fd5
