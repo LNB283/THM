@@ -131,7 +131,7 @@
         - Copy/paste the code. Press enter to complete the sequence and create the symlink.
     - Verify if the right of /bin/bash changed
         - ls -l /bin/bash
-        - Result : picture: [Vulnversity_Privilege_escalation_3.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_3.png)
+        - Result : [Vulnversity_Privilege_escalation_3.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_3.png)
     - Run the command bash -p and become root
     - Move to /root and open root.txt
         - picture: [Vulnversity_Privilege_escalation_4.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Privilege_escalation_4.png)
