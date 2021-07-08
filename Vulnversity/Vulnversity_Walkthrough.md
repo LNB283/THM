@@ -3,10 +3,10 @@
 - https://tryhackme.com/room/vulnversity
 ------------------------
 #### Task1 - Reconnaissance
-Scan the box, how many ports are open?
-        sudo nmap -sV -sC -oN vulnversity_nmap_result [IP]
-        picture: [Vulnversity_Reco_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reco_1.png)
-        Answer : 6
+- Scan the box, how many ports are open?
+    - sudo nmap -sV -sC -oN vulnversity_nmap_result [IP]
+    - picture: [Vulnversity_Reco_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reco_1.png)
+    - Answer : 6
 
 What version of the squid proxy is running on the machine?
         picture: Vulnversity_Reco_1.png
