@@ -41,7 +41,7 @@
     - Check all directories
         - picture: [Vulnversity_Gobuster_2.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Gobuster_2.png)
     - **Answer**: /internal/
-    ------------------------
+------------------------
 #### Task 3 - Compromise the web server
 - Try upload a few file types to the server, what common extension seems to be blocked?
     - Try test.jpg / test.png / test.php
@@ -110,7 +110,26 @@
     - **Answer**: bill
 
 - What is the user flag?
-    - move to /home/bill
-    - ls
-    - cat user.txt
+    - move to /home/bill --> ls --> cat user.txt
     - **Answer**: 8bd7992fbe8a6ad22a63361004cfcedb
+------------------------
+#### Task 4 - Privilege escalation
+- On the system, search for all SUID files. What file stands out?
+    - search SUUID availble
+    - find / -user root -perm -4000 -print 2>/dev/null (*THM command* : find / -user root -perm -4000 -exec ls -ldb {} \;)
+    - **Answer**: /bin/systemctl
+
+- Become root and get the last flag (/root/root.txt)
+    - Use systemctl to create/enable/start our own service.
+    - Check https://gtfobins.github.io/
+        - Search systemctl
+        - Copy the source code
+        - Create a file root_escalate.service
+        - Modify ExecStart and perform this action  "chmod +s /bin/bash"
+        - Copy/paste the code. Press enter to complete the sequence and create the symlink.
+    - Verify if the right of /bin/bash changed
+        - ls -l /bin/bash
+        - Result : -rwsr-sr-x 1 root root 1037528 May 16  2017 /bin/bash
+    - Run the command bash -p and become root
+    - Move to /root and open root.txt
+    - **Answer**: a58ff8579f0a9270368d33a9966c7fd5
