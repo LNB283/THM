@@ -36,8 +36,8 @@
 #### Task 2 - Locating directiry using GoBuster
 - What is the directory that has an upload form page?
     - sudo gobuster dir -u http://[IP]:[Port] -w [path]/wordlists/dirbuster/directory-list-2.3-medium.txt
-    - picture: [Vulnversity_Gobuster_1.png]https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Gobuster_1.png
+    - picture: [Vulnversity_Gobuster_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Gobuster_1.png)
 
     - Check all directories
-    - picture: [Vulnversity_Gobuster_2.png]https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Gobuster_2.png
+    - picture: [Vulnversity_Gobuster_2.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Gobuster_2.png)
     - **Answer**: /internal/
