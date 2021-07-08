@@ -89,4 +89,25 @@
 
     - **Answer**: .phtml
 
+- To gain remote access to this machine, follow these steps:
 
+    - Download reverse php shell (Link: https://github.com/pentestmonkey/php-reverse-shell)
+    - Edit php-reverse-shell.ph
+    - Change the IP and port
+    - Rename the file with the extension .phtml
+    - start your listener --> nc -nlvp [port]
+    - Upload the reverse shell
+    - Go to http://10.10.122.175:3333/internal/uploads/
+    - Click on the .phtml uploaded
+    - Now, if you check your listener, you have a shell.We can see the user 'www-data'
+    - Check /etc/passwd
+    - We found interesting users such as *root* , *bill*
+
+- What is the name of the user who manages the webserver?
+    - **Answer**: bill
+
+- What is the user flag?
+    - move to /home/bill
+    - ls
+    - cat user.txt
+    - **Answer**: 8bd7992fbe8a6ad22a63361004cfcedb
