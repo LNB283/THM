@@ -9,7 +9,7 @@
     - **Answer** : 6
 
 - What version of the squid proxy is running on the machine?
-    - picture: Vulnversity_Reco_1.png
+    - picture: [Vulnversity_Reco_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reco_1.png)
     - **Answer**: 3.5.12
 
 - How many ports will nmap scan if the flag -p-400 was used?
