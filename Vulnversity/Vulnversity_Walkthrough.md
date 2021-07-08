@@ -94,12 +94,15 @@
     - Download reverse php shell (Link: https://github.com/pentestmonkey/php-reverse-shell)
     - Edit php-reverse-shell.ph
     - Change the IP and port
+        - picture: [Vulnversity_Reverse_Shell_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reverse_Shell_1.png)
     - Rename the file with the extension .phtml
     - start your listener --> nc -nlvp [port]
     - Upload the reverse shell
     - Go to http://10.10.122.175:3333/internal/uploads/
     - Click on the .phtml uploaded
+        - picture: [Vulnversity_Reverse_Shell_3.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reverse_Shell_3.png)
     - Now, if you check your listener, you have a shell.We can see the user 'www-data'
+        - picture: [Vulnversity_Reverse_Shell_4.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reverse_Shell_4.png)
     - Check /etc/passwd
     - We found interesting users such as *root* , *bill*
 
