@@ -11,7 +11,7 @@
 ### Task 2 : Initial Access
 - Scan the machine with nmap. What is the other port running a web server on?
     - sudo nmap -sC -sV -oN ./nmap_steelmountain_result 10.10.117.67
-    - Picture: [Steel_Moutain_2.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_2.png) <br>[Steel_Moutain_3.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_3.png)
+    - Picture:<br>[Steel_Moutain_2.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_2.png) <br>[Steel_Moutain_3.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_3.png)
     - **Answer** : 8080
 - Take a look at the other web server. What file server is running?
     - From nmap scan, we know the port 8080 is used for another file server
@@ -23,7 +23,7 @@
 - What is the CVE number to exploit this file server?
     - Visit https://www.exploit-db.com/search
     - Search exploit for rejetto http file server 2.3
-    - Picture: [Steel_Moutain_5.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_5.png)<br>[Steel_Moutain_6.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_6.png)
+    - Picture:<br>[Steel_Moutain_5.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_5.png)<br>[Steel_Moutain_6.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_6.png)
     - **Answer** : 2014-6287
 - Use Metasploit to get an initial shell. What is the user flag?
     - Start metasploit
