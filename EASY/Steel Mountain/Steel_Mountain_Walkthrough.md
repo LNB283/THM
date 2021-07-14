@@ -6,6 +6,7 @@
 - Who is the employee of the month?
     - Check the source code of the web page
     - Picture: [Steel_Moutain_1.png](picture:https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_1.png)
+    picture: [Vulnversity_Reco_1.png](https://github.com/LNB283/THM/blob/main/Vulnversity/Pictures/Vulnversity_Reco_1.png)
     - **Answer** : Bill Harper
 ------------------------
 ### Task 2 : Initial Access
