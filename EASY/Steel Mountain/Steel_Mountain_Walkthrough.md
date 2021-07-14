@@ -51,3 +51,23 @@
     - Open user.txt
     Picture: [Steel_Moutain_12.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_12.png)
     - **Answer** : ??b04763b6fcf51fcd7c13abc7db4fd365
+------------------------
+### Task 3 - Privilege escalation
+- download the script Link: https://github.com/PowerShellMafia/PowerSploit/blob/master/Privesc/PowerUp.ps1
+- Upload the script through meterpreter
+        upload [path]/PowerUp.ps1
+        Picture: [Steel_Moutain_13.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_13.png)
+- Load powershell
+        load powershell
+        Picture: [Steel_Moutain_14.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_13.png)
+- Access powershell
+        powershell_shell
+        Picture: [Steel_Moutain_15.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_15.png)
+- Execute the powershell script
+        . .\PowerUp.ps1  
+- Perform a check
+        Invoke-AllChecks
+        Picture: [Steel_Moutain_16.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_16.png)
+- Take close attention to the CanRestart option that is set to true. What is the name of the service which shows up as an unquoted service path vulnerability?
+    Picture: [Steel_Moutain_17.png](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Pictures/Steel_Mountain_16.png)
+    - **Answer** : AdvancedSystemCareService9
