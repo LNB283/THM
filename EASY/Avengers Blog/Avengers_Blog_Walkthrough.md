@@ -11,11 +11,11 @@
     - If you work with Firefox
         - Select Storage
         - Cookies
-        - Picture: [Avengers_Blog_2.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_2.png
+        - Picture: [Avengers_Blog_2.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_2.png)
     - If you work with Google Chrome
         - Select Application
         - Under Storage , select Cookies
-        - Picture: [Avengers_Blog_1.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_1.png
+        - Picture: [Avengers_Blog_1.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_1.png)
 - **Answer** : cookie_secret
 ---------------------------
 ### Task 3 - HTTP Header
@@ -27,21 +27,21 @@
         - On the left panel, select the first GET request
         - On the left panel, select the tab Header
         - Scroll down and find flag2
-        - Picture: [Avengers_Blog_3.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_3.png
+        - Picture: [Avengers_Blog_3.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_3.png)
 
         - Google Chrome
             - Network tab
             - On the left panel, select the first request (should be materialize by the IP)
             - On the right panel,  select Headers tab
             - Find flag 2
-            - Picture: [Avengers_Blog_4.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_4.png
+            - Picture: [Avengers_Blog_4.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_4.png)
 - **Answers** : headers_are_important
 ---------------------------
 ### Task 4 - Enumeration
 Look around the FTP share and read flag 3!
 - Perform Nmap
     - sudo nmap -sC -sV -oN ./Avengers_Blog_Namp_result [IP]
-    - Picture: [Avengers_Blog_5.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_5.png
+    - Picture: [Avengers_Blog_5.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_5.png)
 - FTP is opened. THM platform provides the access credentials: username (groot) and a password (iamgroot)
     - Log to the FTP
     - Navigate and find flag3.txt
@@ -50,7 +50,7 @@ Look around the FTP share and read flag 3!
         - quit
     - Consult flag3.txt
         - cat flag3.txt
-    - Picture: [Avengers_Blog_6.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_6.png
+    - Picture: [Avengers_Blog_6.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_6.png)
 - **Answers** : 8fc651a739befc58d450dc48e1f1fd2e
 ---------------------------
 ### Task 5 - Gobuster
@@ -59,7 +59,7 @@ Look around the FTP share and read flag 3!
     - sudo gobuster dir -u http://[IP] -w [Wordlist path]/directory-list-2.3-medium.txt
     - One interesting result: /portal (Status: 200)
     - Let's try this
-- Picture: [Avengers_Blog_7.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_7.png
+- Picture: [Avengers_Blog_7.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_7.png)
 - ** Answers ** : /portal
 ---------------------------
 ### Task 6 - SQL Injection
@@ -73,7 +73,7 @@ Look around the FTP share and read flag 3!
     >" OR 1 = 1 -- -
     >' OR '' = '
     >' OR 1 = 1 --   (correct pattern)
-    - Picture: [Avengers_Blog_8.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_8.png
+    - Picture: [Avengers_Blog_8.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_8.png)
     - Check the source page
     - ** Answers ** : 223
 ---------------------------
@@ -81,6 +81,6 @@ Look around the FTP share and read flag 3!
 - Read the contents of flag5.txt
 - Some command are authorize but not all. For example : ls , cd
     - cd ..;ls;tac flag5.txt
-- Picture: [Avengers_Blog_9.png]https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_9.png
+- Picture: [Avengers_Blog_9.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_9.png)
 - ** Answers ** : d335e2d13f36558ba1e67969a1718af7
 
