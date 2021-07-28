@@ -1,5 +1,5 @@
 # TryHackMe walkthrough
-## Easy Room
+## Easy Rooms
 | Name | Difficulty| 
 | -------------- | :--------- |
 |[Vulnversity](https://github.com/LNB283/THM/blob/main/EASY/Vulnversity/Vulnversity_Walkthrough.md)|Easy|
