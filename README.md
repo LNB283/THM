@@ -7,4 +7,5 @@
 |[Kenobi](https://github.com/LNB283/THM/blob/main/EASY/Kenobi/Kenobi_wlakthrough.md)|Easy|
 |[Steel Moutain](https://github.com/LNB283/THM/blob/main/EASY/Steel%20Mountain/Steel_Mountain_Walkthrough.md)|Easy|
 |[Avengers Blog](https://github.com/LNB283/THM/blob/main/EASY/Avengers%20Blog/Avengers_Blog_Walkthrough.md)|Easy|
+|[ToolsRus](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/ToolsRus_Walkthrough.md)|Easy|
 
