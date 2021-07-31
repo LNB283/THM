@@ -8,7 +8,7 @@
     - 80
     - 1234 --> Apache Tomcat/Coyote JSP engine 1.1
     - 8009 --> Apache Jserv (Protocol v1.3)
-
+- Picture: [ToolsRus_walkthrough_1.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_1.png)
 - What other port that serves a webs service is open on the machine?
 **Answers**: 1234
 - What is the server version (run the scan against port 80)?
