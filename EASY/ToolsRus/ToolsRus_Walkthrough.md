@@ -63,13 +63,16 @@
         - [ToolsRus_walkthrough_11.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_11.png)
 - Execute the payload
     - execution
+    - [ToolsRus_walkthrough_12.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_12.png)
 - When the payload is active, type these commands
     - shell
     - id
+    - [ToolsRus_walkthrough_13.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_13.png)
 - What user did you get a shell as?
 **Answer**: root
 - What text is in the file /root/flag.txt
     - cd root
     - ls
     - cat flag.txt
+    - [ToolsRus_walkthrough_14.png](https://github.com/LNB283/THM/blob/main/EASY/ToolsRus/Pictures/ToolsRus_walkthrough_14.png)
 **Answer**: ff1fc4a81affcc7688cf89ae7dc6e0e1
