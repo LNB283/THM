@@ -6,9 +6,11 @@
 	- **Answer** : Agent 47 (main character of the videogame HITMAN)
 - Obtain access via SQLi
 	- Use ' or 1=1 -- - as your username and leave the password blank.
+     - picture: [GameZone_1.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_1.png)
 	- **Answer** : portail.php
 - Using SQLMap
 	- Intercept the request from portail.php by using BurpSuite
+     - picture: [GameZone_3.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_3.png),[GameZone_4.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_4.png)
 	- Save the request in text file
 	- We can then pass this into SQLMap to use our authenticated user session.
 		SQLMap option:
