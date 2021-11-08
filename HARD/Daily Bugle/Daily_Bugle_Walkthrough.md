@@ -17,3 +17,30 @@ Result:
 --> Port 22/80/3306 opened
 --> Port 3306: MariaDB
 ```
+- Gobuster
+```
+gobuster dir -u http://[IP]:80 -w [path to wordlist]
+Directories found:
+/images
+/templates
+/media
+/modules
+/bin
+/plugins
+/includes
+/language
+/components
+/cache
+/libraries
+/tmp
+/layouts
+/administrator
+```
+- Joomscan
+
+We know **Joomla** is installed.
+We have an interesting tool : joomscan (https://www.kali.org/tools/joomscan/)
+
+```
+joomscan -u [IP]
+```
