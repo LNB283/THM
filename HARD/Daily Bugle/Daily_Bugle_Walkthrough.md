@@ -8,3 +8,8 @@
 **Answer**
 ###### spiderman
 ---
+### Task 2 - Obtain user and root
+1. Reco
+- NMAP
+```shell
+nmap -sC -sV [IP] 
