@@ -3,6 +3,8 @@
 - https://tryhackme.com/room/dailybugle
 ---
 ### Task 1 - Deploy
-**Question** : Who robbed the bank?
-**Answer** : spiderman
+**Question**
+Who robbed the bank?
+**Answer**
+spiderman
 ---
