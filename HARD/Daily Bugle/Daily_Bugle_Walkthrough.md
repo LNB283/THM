@@ -13,7 +13,7 @@
 - NMAP
 ```shell
 nmap -sC -sV [IP] 
-```bash
 Result:
 --> Port 22/80/3306 opened
 --> Port 3306: MariaDB
+```
