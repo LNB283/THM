@@ -17,6 +17,7 @@ Result:
 --> Port 22/80/3306 opened
 --> Port 3306: MariaDB
 ```
+[DailyBugle_1.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_1.png)
 - Gobuster
 ```
 gobuster dir -u http://[IP]:80 -w [path to wordlist]
