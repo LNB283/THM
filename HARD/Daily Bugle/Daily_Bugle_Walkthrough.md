@@ -69,6 +69,7 @@ Explore the txt file to understand the exploit
 searchsploit -x php/webapps/42033.txt
 ```
 [DailyBugle_4.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_4.png)
+
 We have a beautiful sqlmap commandline to help us ^_^
 
 3. SQLMAP 
@@ -129,6 +130,7 @@ User Groups --> Only 1 user (Jonah) is here
 
 Now let's move to **Configuration/Global** --> Nothing really special
 Move to **Configuration/Templates** --> **One Template is used for allpages: Protostar**. Good information. We probably use this template to gather more informaiton.
+
 [DailyBugle_10.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_10.png)
 
 We can edit this template to see if we can exploit it by adding some code. 
@@ -154,6 +156,7 @@ system("cat configuration.php")
 
 With the user **jjameson** and this password **nv5uz9r3ZEDzVjNu**, we can SSH the server.
 [DailyBugle_14.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_14.png)
+
 **Question**
 ###### What is the user flag?
 **Answer**
@@ -178,6 +181,7 @@ chmod +x yum.sh
 ```
 - Sixth: We are **root**
 [DailyBugle_17.png](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Pictures/DailyBugle_17.png)
+
 **Question**
 ###### What is the root flag?
 **Answer**
