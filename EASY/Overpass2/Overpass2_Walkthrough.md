@@ -142,8 +142,11 @@ func hashPassword(password string, salt string) string {
 ```
 
 Now we can prepare our hashcat command line. We need to find the code for sha512($pass.$salt)
+
 *Check:* https://hashcat.net/wiki/doku.php?id=example_hashes
+
 *Code:*  **1710**
+
 ```
 Comand line: hashcat -m 1710 -a 0 /media/sf_LOLO_Share/TryHackMe/Beginner/EASY/Overpass2/backdoor_hash /usr/share/wordlists/rockyou.txt
 Result: 6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed:1c362db832f3f864c8c2fe05f2002a05:november16
