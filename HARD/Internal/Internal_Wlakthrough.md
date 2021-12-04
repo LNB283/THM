@@ -147,7 +147,7 @@ Now we are logged into jenkins as admin.
 
 If you move to **Manage Jenkins**, you have access to all settings available for admin. One is interesting:  **Script Console**
 
-- First* Start a listener
+- First: Start a listener
 ```
 nc -nlvp 5555
 ```
