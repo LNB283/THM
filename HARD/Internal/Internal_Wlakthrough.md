@@ -112,6 +112,8 @@ We are logged and we found the first flag \^_^/
 **Question**
 ###### find root flag
 
+# Privilege escalation
+
 From the SSH session, let's check what actions aubreanna should be able to do
 ```
 id
