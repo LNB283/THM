@@ -266,5 +266,5 @@ drwxr-xr-x  3 root root 4096 Jun 13  2020 .local
 - Seventh: check **.root.txt**
 
 **Answer**
-###### 
+###### flag{63a9f0ea7bb98050796b649e85481845}
 
