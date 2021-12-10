@@ -7,9 +7,6 @@
 nmap -sC -sC -p- [IP]
 ```
 
-```
-```
-
 **Question**
 #### How many ports are open?
 
