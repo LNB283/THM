@@ -12,12 +12,106 @@ It's really helpfull to understand this type of vulnerability.
 #### prototype pollution
 ---
 ### Recon
+First scan to check all ports
 ```
-sudo nmap -sS -sC -sC -p- [IP]
+sudo nmap -p- [IP]
 ```
 **Namp scan result**
 ```
+Nmap scan report for 10.10.238.103
+Host is up (0.094s latency).
+Not shown: 64438 closed ports, 1093 filtered ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+5044/tcp open  lxi-evntsvc
+5601/tcp open  esmagent
 ```
+Second scan only focused on findings ports
+```
+sudo nmap -sS -sC -sV -p 22,80,5044,5601 [IP]
+```
+```
+PORT     STATE SERVICE      VERSION
+22/tcp   open  ssh          OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|   2048 9d:f8:d1:57:13:24:81:b6:18:5d:04:8e:d2:38:4f:90 (RSA)
+|   256 e1:e6:7a:a1:a1:1c:be:03:d2:4e:27:1b:0d:0a:ec:b1 (ECDSA)
+|_  256 2a:ba:e5:c5:fb:51:38:17:45:e7:b1:54:ca:a1:a3:fc (ED25519)
+80/tcp   open  http         Apache httpd 2.4.18 ((Ubuntu))
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html).
+5044/tcp open  lxi-evntsvc?
+5601/tcp open  esmagent?
+| fingerprint-strings:
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, Help, Kerberos, LDAPBindReq, LDAPSearchReq, LPDString, RPCCheck, RTSPRequest, SIPOptions, SMBProgNeg, SSLSessionReq, TLSSessionReq, TerminalServerCookie, X11Probe:
+|     HTTP/1.1 400 Bad Request
+|   FourOhFourRequest:
+|     HTTP/1.1 404 Not Found
+|     kbn-name: kibana
+|     kbn-xpack-sig: c4d007a8c4d04923283ef48ab54e3e6c
+|     content-type: application/json; charset=utf-8
+|     cache-control: no-cache
+|     content-length: 60
+|     connection: close
+|     Date: Sun, 09 Jan 2022 22:23:35 GMT
+|     {"statusCode":404,"error":"Not Found","message":"Not Found"}
+|   GetRequest:
+|     HTTP/1.1 302 Found
+|     location: /app/kibana
+|     kbn-name: kibana
+|     kbn-xpack-sig: c4d007a8c4d04923283ef48ab54e3e6c
+|     cache-control: no-cache
+|     content-length: 0
+|     connection: close
+|     Date: Sun, 09 Jan 2022 22:23:32 GMT
+|   HTTPOptions:
+|     HTTP/1.1 404 Not Found
+|     kbn-name: kibana
+|     kbn-xpack-sig: c4d007a8c4d04923283ef48ab54e3e6c
+|     content-type: application/json; charset=utf-8
+|     cache-control: no-cache
+|     content-length: 38
+|     connection: close
+|     Date: Sun, 09 Jan 2022 22:23:32 GMT
+|_    {"statusCode":404,"error":"Not Found"}
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port5601-TCP:V=7.91%I=7%D=1/9%Time=61DB6063%P=x86_64-apple-darwin17.7.0
+SF:%r(GetRequest,D4,"HTTP/1\.1\x20302\x20Found\r\nlocation:\x20/app/kibana
+SF:\r\nkbn-name:\x20kibana\r\nkbn-xpack-sig:\x20c4d007a8c4d04923283ef48ab5
+SF:4e3e6c\r\ncache-control:\x20no-cache\r\ncontent-length:\x200\r\nconnect
+SF:ion:\x20close\r\nDate:\x20Sun,\x2009\x20Jan\x202022\x2022:23:32\x20GMT\
+SF:r\n\r\n")%r(HTTPOptions,117,"HTTP/1\.1\x20404\x20Not\x20Found\r\nkbn-na
+SF:me:\x20kibana\r\nkbn-xpack-sig:\x20c4d007a8c4d04923283ef48ab54e3e6c\r\n
+SF:content-type:\x20application/json;\x20charset=utf-8\r\ncache-control:\x
+SF:20no-cache\r\ncontent-length:\x2038\r\nconnection:\x20close\r\nDate:\x2
+SF:0Sun,\x2009\x20Jan\x202022\x2022:23:32\x20GMT\r\n\r\n{\"statusCode\":40
+SF:4,\"error\":\"Not\x20Found\"}")%r(RTSPRequest,1C,"HTTP/1\.1\x20400\x20B
+SF:ad\x20Request\r\n\r\n")%r(RPCCheck,1C,"HTTP/1\.1\x20400\x20Bad\x20Reque
+SF:st\r\n\r\n")%r(DNSVersionBindReqTCP,1C,"HTTP/1\.1\x20400\x20Bad\x20Requ
+SF:est\r\n\r\n")%r(DNSStatusRequestTCP,1C,"HTTP/1\.1\x20400\x20Bad\x20Requ
+SF:est\r\n\r\n")%r(Help,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r
+SF:(SSLSessionReq,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(Termi
+SF:nalServerCookie,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(TLSS
+SF:essionReq,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(Kerberos,1
+SF:C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(SMBProgNeg,1C,"HTTP/1
+SF:\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(X11Probe,1C,"HTTP/1\.1\x20400\
+SF:x20Bad\x20Request\r\n\r\n")%r(FourOhFourRequest,12D,"HTTP/1\.1\x20404\x
+SF:20Not\x20Found\r\nkbn-name:\x20kibana\r\nkbn-xpack-sig:\x20c4d007a8c4d0
+SF:4923283ef48ab54e3e6c\r\ncontent-type:\x20application/json;\x20charset=u
+SF:tf-8\r\ncache-control:\x20no-cache\r\ncontent-length:\x2060\r\nconnecti
+SF:on:\x20close\r\nDate:\x20Sun,\x2009\x20Jan\x202022\x2022:23:35\x20GMT\r
+SF:\n\r\n{\"statusCode\":404,\"error\":\"Not\x20Found\",\"message\":\"Not\
+SF:x20Found\"}")%r(LPDString,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\
+SF:n")%r(LDAPSearchReq,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(
+SF:LDAPBindReq,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n")%r(SIPOptio
+SF:ns,1C,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n\r\n");
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 21.07 seconds
+```
+
 **Question**
 #### What is the version of visualization dashboard installed in the server?
 - Connect to http://[IP]:5601
