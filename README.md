@@ -22,9 +22,6 @@
 |[Cyborg](https://github.com/LNB283/THM/blob/main/EASY/Cyborg/Cyborg_Walkthrough.md)|Easy|
 |[Kiba](https://github.com/LNB283/THM/blob/main/EASY/Kiba/Kiba_Walkthrough.md)|Easy|
 |[Library](https://github.com/LNB283/THM/blob/main/EASY/Library/Libray_Walkthrough.md)|Easy|
-|||
-|||
-|||
 |[Pokemon](https://github.com/LNB283/THM/blob/main/EASY/Polemon/Pokemon_Walktrhough.md)|Easy|
 |[Res](https://github.com/LNB283/THM/blob/main/EASY/Res/Res_Walkthrough.md)|Easy|
 |[Source](https://github.com/LNB283/THM/blob/main/EASY/Source/Source_Walkthrough.md)|Easy|
