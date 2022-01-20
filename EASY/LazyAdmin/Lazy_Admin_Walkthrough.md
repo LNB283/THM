@@ -39,6 +39,8 @@ We arrive to a page that indicates the website is under construction. But the mo
 
 Now, we can check the [exploit-db](http://exploit-db.com) and try to find some exploit related to **SweetRice** CMS framework.
 
+We found a [list](https://github.com/LNB283/THM/blob/main/EASY/LazyAdmin/Pictures/LazyAdmin_1.png) of known exploit
+
 
 
 **Question**
