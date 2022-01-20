@@ -41,6 +41,30 @@ Now, we can check the [exploit-db](http://exploit-db.com) and try to find some e
 
 We found a [list](https://github.com/LNB283/THM/blob/main/EASY/LazyAdmin/Pictures/LazyAdmin_1.png) of known exploit
 
+Let's explore each exploit from the top, that means [Backup disclosure](https://www.exploit-db.com/exploits/40718)
+```
+Title: SweetRice 1.5.1 - Backup Disclosure
+Application: SweetRice
+Versions Affected: 1.5.1
+Vendor URL: http://www.basic-cms.org/
+Software URL: http://www.basic-cms.org/attachment/sweetrice-1.5.1.zip
+Discovered by: Ashiyane Digital Security Team
+Tested on: Windows 10
+Bugs: Backup Disclosure
+Date: 16-Sept-2016
+
+
+Proof of Concept :
+
+You can access to all mysql backup and download them from this directory.
+http://localhost/inc/mysql_backup
+
+and can access to website files backup from:
+http://localhost/SweetRice-transfer.zip
+```
+What we learn: we have an opportunity to access the mysql backup. Let's try it **http://[IP]/content/inc/mysql_backup/**
+
+We found a backup file. We can download it and try to analyze it.
 
 
 **Question**
