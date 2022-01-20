@@ -35,7 +35,7 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 /content              (Status: 301) [Size: 314] [--> http://10.10.23.230/content/]
 ```
-Check the link **http://10.10.23.230/content/**
+Check the link **http://[IP]/content/**
 
 We arrive to a page that indicates the website is under construction. But the most interesting information is the CMS Framework name **SweetRice**
 
