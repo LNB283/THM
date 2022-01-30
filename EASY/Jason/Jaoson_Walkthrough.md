@@ -8,6 +8,14 @@ nmap -sC -sC -p- [IP]
 ```
 **Namp scan result**
 ```
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2022-01-30 20:11 CEST
+Nmap scan report for 10.10.237.12
+Host is up (0.25s latency).
+Not shown: 65533 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
 ```
 Let's check  the website. We gather interesting information from the homepage : Built with NodeJs
 
