@@ -1,4 +1,4 @@
-# Retro Walkthrough
+# LFI Walkthrough
 ### Link
 - https://tryhackme.com/room/inclusion
 ---
