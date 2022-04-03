@@ -345,4 +345,24 @@ Now we cand try to decrypt the **password** of **DesKel**.
 ---
 ### Easter 6
 *hint*:Look out for the response header.
-
+```
+curl -s 10.10.207.62 -D header.txt
+```
+Check the **header.txt**
+```
+cat header.txt
+HTTP/1.1 200 OK
+Date: Sun, 03 Apr 2022 00:42:13 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Busted: Hey, you found me, take this Easter 6: THM{l37'5_p4r7y_h4rd}
+Set-Cookie: Invited=0
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+Content-Type: text/html
+```
+**Answer** 
+#### THM{l37'5_p4r7y_h4rd}
+---
+### Easter 7
+*hint*:Cookie is delicious
