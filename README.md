@@ -26,12 +26,23 @@
 |[Res](https://github.com/LNB283/THM/blob/main/EASY/Res/Res_Walkthrough.md)|Easy|
 |[Source](https://github.com/LNB283/THM/blob/main/EASY/Source/Source_Walkthrough.md)|Easy|
 |[Startup](https://github.com/LNB283/THM/blob/main/EASY/Startup/Startup_walkthrough.md)|Easy|
+|[Bebop](https://github.com/LNB283/THM/blob/main/EASY/Bebop/Bebop_Walkthrough.md)|Easy|
+|[Gallery](https://github.com/LNB283/THM/blob/main/EASY/Gallery/Gallery_Walkthrough.md)|Easy|
+|[Gaming Server](https://github.com/LNB283/THM/blob/main/EASY/GamingSever/GamingServer_Walkthrough.md)|Easy|
+|[Jason](https://github.com/LNB283/THM/blob/main/EASY/Jason/Jaoson_Walkthrough.md)|Easy|
+|[Kiba](https://github.com/LNB283/THM/blob/main/EASY/Kiba/Kiba_Walkthrough.md)|Easy|
+|[LFI](https://github.com/LNB283/THM/blob/main/EASY/LFI/LFI_Walkthrough.md)|Easy|
+|[Lazy Admin](https://github.com/LNB283/THM/blob/main/EASY/LazyAdmin/Lazy_Admin_Walkthrough.md)|Easy|
+|[flatline](https://github.com/LNB283/THM/blob/main/EASY/flatline/flatline_walkthrough.md)|Easy|
 |||
 |||
 |||
 |[Attacktive Directory](https://github.com/LNB283/THM/blob/main/MEDIUM/Attacktive%20Directory/Attacktive_Directory_Walkthrough.md)|Medium|
 |[Classic Password](https://github.com/LNB283/THM/blob/main/MEDIUM/Classic%20Passwd/Classic_Passwd_Walkthrough.md)|Medium|
 |[Anonymous](https://github.com/LNB283/THM/blob/main/MEDIUM/Anonymous/Anonymous%20_Walkthrough.md)|Medium|
+|[Chronicle](https://github.com/LNB283/THM/blob/main/MEDIUM/Chronicle/Chronicle_Walkthrough.md)|Medium|
+|[Oh My Server](https://github.com/LNB283/THM/blob/main/MEDIUM/OhMyServer/OhMyServer_Walkthroug.md)|Medium|
+|[CTF Vol.2](https://github.com/LNB283/THM/blob/main/MEDIUM/CTF_Collection_Vol2/CTF_Collection_Vol2_Walkthrough.md)|Medium|
 |||
 |||
 |||
