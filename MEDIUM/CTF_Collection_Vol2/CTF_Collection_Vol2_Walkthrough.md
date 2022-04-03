@@ -33,7 +33,40 @@ Nmap done: 1 IP address (1 host up) scanned in 41.53 seconds
 ```
 **Gobuster scan result**
 ```
-
+===============================================================
+Gobuster v3.1.0
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.10.21.196
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /Users/laurentnebout/Documents/Tools/SecLists-master/Discovery/Web-Content/directory-list-2.3-medium.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.1.0
+[+] Timeout:                 10s
+===============================================================
+2022/04/03 12:26:20 Starting gobuster in directory enumeration mode
+===============================================================
+/index                (Status: 200) [Size: 94328]
+/login                (Status: 301) [Size: 312] [--> http://10.10.21.196/login/]
+/button               (Status: 200) [Size: 39148]
+/static               (Status: 200) [Size: 253890]
+/cat                  (Status: 200) [Size: 62048]
+/small                (Status: 200) [Size: 689]
+Progress: 1375 / 220561 (0.62%)                                                [ERROR] 2022/04/03 12:27:11 [!] context deadline exceeded (Client.Timeout or context cancellation while reading body)
+/robots               (Status: 200) [Size: 430]
+/iphone               (Status: 200) [Size: 19867]
+/game1                (Status: 301) [Size: 312] [--> http://10.10.21.196/game1/]
+/egg                  (Status: 200) [Size: 25557]
+/dinner               (Status: 200) [Size: 1264533]
+/ty                   (Status: 200) [Size: 198518]
+/ready                (Status: 301) [Size: 312] [--> http://10.10.21.196/ready/]
+/saw                  (Status: 200) [Size: 156274]
+/game2                (Status: 301) [Size: 312] [--> http://10.10.21.196/game2/]
+/wel                  (Status: 200) [Size: 155758]
+/free_sub             (Status: 301) [Size: 315] [--> http://10.10.21.196/free_sub/]
+/nicole               (Status: 200) [Size: 367650]
+/server-status        (Status: 403) [Size: 293]
 ```
 ---
 ### Easter 1
@@ -366,3 +399,266 @@ Content-Type: text/html
 ---
 ### Easter 7
 *hint*:Cookie is delicious
+
+Let's continue to use **Burp**. 
+- First: Launch **Burp**
+- Second: Go to http://[IP]/ and start to intercept request. The interesting request is **GET**
+```
+GET / HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+```
+- Third: We haave into this request the **Cookie** paramter. Send it to **repeater**
+- Fourth: From **repeater**, change the value of **Cookie invited** from **0** to **1** andforward the request
+```
+GET / HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: Invited=1
+Upgrade-Insecure-Requests: 1
+```
+```
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Busted: Hey, you found me, take this Easter 6: THM{l37'5_p4r7y_h4rd}
+Vary: Accept-Encoding
+Connection: close
+Content-Type: text/html
+Content-Length: 94376
+
+<!DOCTYPE html>
+<html>
+		<head>
+		<title>360 No Scope!</title>
+		<h1>Let's get party! Erm....mmmmmmmmmmm</h1>
+		<script src="jquery-9.1.2.js"></script>
+		 <style>
+			body {
+  				background-image: url('static.gif');
+				}
+		</style> 
+		<img src="rainbow-frog.gif"/><img src="rainbow-frog.gif"/><img src="rainbow-frog.gif"/>
+	</head>
+
+	<body>
+		<h2>DID you know: Banging your head against a wall for one hour burns 150 calories.</h2>
+					<p><img src="wel.gif"/></p>
+			<h2> You are now officially invited. Enjoy the easter 7: THM{w3lc0m3!_4nd_w3lc0m3} 
+```
+**Answer** 
+#### THM{w3lc0m3!_4nd_w3lc0m3} 
+---
+### Easter 8
+*hint*:Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1
+
+Still with **Burp** and based on the **hint**, we need to change the **User-Agent** to find the flag 8.
+
+For that, we just need to intercept the request when we click on the iPhone picture and change 2 parameters
+
+- First: Cookie: Invited must be **1**
+- Second : User-agent
+
+```
+GET / HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.1 Mobile/15E148 Safari/604.1
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: Invited=1
+Upgrade-Insecure-Requests: 1
+```
+```
+<p>Psst....psst.. hey dude.......do you have extra cash</p>
+	<p>Please buy me one iphone 11....I'm poor, link down below.</p>
+			<h4>You are Rich! Subscribe to THM server ^^ now. Oh btw, Easter 8: THM{h3y_r1ch3r_wh3r3_15_my_k1dn3y} 
+		<a href="https://www.apple.com/iphone-11/"><img src="iphone.jpg"/></a>
+	<br>
+```
+**Answer** 
+#### THM{h3y_r1ch3r_wh3r3_15_my_k1dn3y} 
+---
+### Easter 9
+*hint*:Something is redirected too fast. You need to capture it.
+
+I was really lucky to find it ^^;  I intercepted the request when I tried to push the red button from the Main page. I found the **Easter 13**. But not the **Easter 9**. I navigated into the tab **Target** in **Burp** and check the **response** page **/ready/**.... I found the **Easter 9** ^^v
+```
+HTTP/1.1 200 OK
+Date: Sun, 03 Apr 2022 17:01:06 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Vary: Accept-Encoding
+Content-Length: 276
+Connection: close
+Content-Type: text/html
+
+<html>
+	<head>
+		<title>You just press it</title>
+		<meta http-equiv="refresh" content="3;url=http:gone.php" />
+		<p style="text-align:center"><img src="bye.gif"/></p>
+		<!-- Too fast, too good, you can't catch me. I'm sanic Easter 9: THM{60nn4_60_f457} -->
+	</head>
+
+</html>
+
+```
+**Answer** 
+#### THM{60nn4_60_f457}
+---
+### Easter 10
+*hint*:Look at THM URL without https:// and use it as a referrer.
+
+Initial Request
+```
+GET /free_sub/ HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://10.10.21.196/
+Connection: close
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+```
+Initial Reponse
+```
+HTTP/1.1 200 OK
+Date: Sun, 03 Apr 2022 17:13:55 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Vary: Accept-Encoding
+Content-Length: 65
+Connection: close
+Content-Type: text/html
+
+only people came from tryhackme are allowed to claim the voucher.
+```
+Let's change the **Referer** value from the **Request**. We try to specify the Tryhackme url.
+
+New Request 
+```
+GET /free_sub/ HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: tryhackme.com
+Connection: close
+Cookie: Invited=1
+Upgrade-Insecure-Requests: 1
+```
+
+New Response
+```
+HTTP/1.1 200 OK
+Date: Sun, 03 Apr 2022 17:15:31 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Vary: Accept-Encoding
+Content-Length: 118
+Connection: close
+Content-Type: text/html
+
+Nah, there are no voucher here, I'm too poor to buy a new one XD. But i got an egg for you. Easter 10: THM{50rry_dud3}
+```
+
+**Answer** 
+#### THM{50rry_dud3}
+---
+### Easter 11
+*hint*:Temper the html
+
+For this ine, we continue into the main page. we have the menu selection. **Burp Time** ^^
+
+Initial Request
+```
+POST / HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 27
+Origin: http://10.10.21.196
+Connection: close
+Referer: http://10.10.21.196/
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+
+dinner=DesKel&submit=submit
+```
+Initial Response : nothing. I tried all option available and nothing really relevant. One informaiton we cna catch from the main page if we scroll down is many **eggs** pictures. I send the request to **Repeater** and add **egg** for the dinner value and send the new crafted request
+```
+POST / HTTP/1.1
+Host: 10.10.21.196
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 24
+Origin: http://10.10.21.196
+Connection: close
+Referer: http://10.10.21.196/
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+
+dinner=egg&submit=submit
+```
+
+New Response
+```
+</form>
+
+	You found the secret menu, take the easter 11: THM{366y_b4k3y}	<h1 style="color:red"">Press this button if you wishes to watch the world burn!!!!!!!!!!!!!!!!<h1>
+	<a href="/ready"><p style="text-align:center"><img src="button.gif"/></p></a> 
+```
+**Answer** 
+#### THM{366y_b4k3y}
+---
+### Easter 12
+*hint*:Fake js file
+
+For this one, we just need to analyze the page and find the **jquery-9.1.2.js**. With the Developer tool, we can check with Javascript source and :
+```
+function ahem()
+ {
+	str1 = '4561737465722031322069732054484d7b68316464336e5f6a355f66316c337d'
+	var hex  = str1.toString();
+	var str = '';
+	for (var n = 0; n < hex.length; n += 2) {
+		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+	}
+	return str;
+ }
+```
+Now we have the function called **ahem**. A great feature from Firefox is , from the Develper tools, the tab **Console**. We just click on **Console** tab and call the **ahem** function
+```
+ahem()
+"Easter 12 is THM{h1dd3n_j5_f1l3}"
+```
+**Answer** 
+#### THM{h1dd3n_j5_f1l3}
+---
+### Easter 13
+
+About this flag, I found it during the Easter 9 step ^^
+**Answer** 
+#### THM{1_c4n'7_b3l13v3_17}
+---
+### Easter 14
+*hint*:Embed image code
