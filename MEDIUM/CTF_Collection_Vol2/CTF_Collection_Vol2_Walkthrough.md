@@ -722,4 +722,185 @@ The code is : GameOver
 ### Easter 16
 *hint*:Make all inputs into one form.
 
+Now, we move to the Game2 ^^
 
+When I tried all button, I obtained the same message : **Try Harder, I need all 3 buttons get pressed at once**
+
+Intercept the request and send to **repeater**. 
+
+```
+POST /game2/ HTTP/1.1
+Host: 10.10.85.48
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://10.10.85.48
+Connection: close
+Referer: http://10.10.85.48/game2/
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+
+button1=button1&submit=
+```
+
+New Request
+```
+POST /game2/ HTTP/1.1
+Host: 10.10.85.48
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 61
+Origin: http://10.10.85.48
+Connection: close
+Referer: http://10.10.85.48/game2/
+Cookie: Invited=0
+Upgrade-Insecure-Requests: 1
+
+button1=button1&button2=button2&button3=button3&submit=submit
+```
+
+Response
+```
+HTTP/1.1 200 OK
+Date: Sun, 03 Apr 2022 19:14:09 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Powered-By: PHP/5.3.10-1ubuntu3.26
+Vary: Accept-Encoding
+Content-Length: 739
+Connection: close
+Content-Type: text/html
+
+<html>
+        <head>
+                <title>Game 2</title>
+                <h1>Press the button simultaneously</h1>
+        </head>
+	<body>
+	
+	<form method="POST">
+		<input type="hidden" name="button1" value="button1">
+		<button name="submit" value="submit">Button 1</button>
+	</form>
+
+	<form method="POST">
+                <input type="hidden" name="button2" value="button2">
+                <button name="submit" value="submit">Button 2</button>
+        </form>
+
+	<form method="POST">
+                <input type="hidden" name="button3" value="button3">
+                <button name="submit" value="submit">Button 3</button>
+        </form>
+	Just temper the code and you are good to go. Easter 16: THM{73mp3r_7h3_h7ml}	</body>
+</html>
+```
+
+**Answer** 
+#### THM{73mp3r_7h3_h7ml}
+---
+### Easter 17
+*hint*:bin -> dec -> hex -> ascii
+
+I also remembered I saw **Easter 16** in the **Main** source code page.
+```
+<!--! Easter 17-->
+	<button onclick="nyan()">Mulfunction button</button><br>
+	<p id="nyan"></p>
+
+	
+	<script>
+	function catz(){
+        	document.getElementById("nyan").innerHTML = "100010101100001011100110111010001100101011100100010000000110001001101110011101000100000010101000100100001001101011110110110101000110101010111110110101000110101010111110110101100110011011100000101111101100100001100110110001100110000011001000011001101111101"
+	}
+	</script>
+```
+We the support of the **hint**, I used [CyberChef](https://gchq.github.io/CyberChef)
+
+**Answer** 
+#### THM{j5_j5_k3p_d3c0d3}
+---
+### Easter 18
+*hint*:Request header. Format is egg:Yes
+
+We just modify the request by adding **Cookie: Invited=YES** and **egg:yes** and send it
+
+```
+GET / HTTP/1.1
+Host: 10.10.85.48
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: Invited=YES
+egg:yes
+Upgrade-Insecure-Requests: 1
+Cache-Control: max-age=0
+```
+
+Response
+```
+
+	<h2>Sometime, you just need to say 'YES' to the 'egg'. The page will definately roll the egg for you</h2>
+	That's it, you just need to say YESSSSSSSSSS. Easter 18: THM{70ny_r0ll_7h3_366}	<img src="egg.gif"/><img src="egg.gif"/><img src="egg.gif"/><img src="egg.gif"/><img src="egg.gif"/>
+	<h1>DID YOU KNOW: All swans in England belong to the queen. </h1>
+	<img height="2" width="2000" src="small.png"/>
+	<h3> Hey! I got the easter 20 for you. I leave the credential for you to POST (username:DesKel, password:heIsDumb). Please, I beg you. Don't let him know.</h3>
+		<br><br><br>
+```
+**Answer** 
+#### THM{70ny_r0ll_7h3_366}
+---
+### Easter 19
+*hint*:A thick dark line
+
+By just continue to read the source page 
+```
+<img height="2" width="2000" src="small.png"/>
+```	
+
+And when I checked this picture : http://[IP]/small.png, we found the flag ^^;
+
+**Answer** 
+#### THM{700_5m4ll_3yy}
+---
+### Easter 20
+*hint*:You need to POST the data instead of GET. Burp suite or curl might help.
+
+Let's finish with **Burp**. From the source page, we have this informaiton
+```
+<h3> Hey! I got the easter 20 for you. I leave the credential for you to POST (username:DesKel, password:heIsDumb). Please, I beg you. Don't let him know.</h3>
+```
+
+I crafted a **POST** request based on the comment.
+
+```
+GET / HTTP/1.1
+Host: 10.10.85.48
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:98.0) Gecko/20100101 Firefox/98.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Cookie: Invited=1
+Upgrade-Insecure-Requests: 1
+Cache-Control: max-age=0
+Content-Length: 37
+
+username=DesKel&password=heIsDumb
+```
+
+Response
+```
+<h3> Hey! I got the easter 20 for you. I leave the credential for you to POST (username:DesKel, password:heIsDumb). Please, I beg you. Don't let him know.</h3>
+	Okay, you pass, Easter 20: THM{17_w45_m3_4ll_4l0n6}	<br><br><br>
+	<h2 style="text-align:center;"> That's all! Thank you!</h2>
+```
+**Answer** 
+####  THM{17_w45_m3_4ll_4l0n6}
