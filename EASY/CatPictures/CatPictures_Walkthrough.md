@@ -1,4 +1,4 @@
-# Bebop Walkthrough
+# Cat Pictures Walkthrough
 ### Link
 - https://tryhackme.com/room/catpictures
 ---
