@@ -1,4 +1,4 @@
-# Insekube Walkthrough
+# Confidential Walkthrough
 ### Link
 - https://tryhackme.com/room/confidential
 ---
