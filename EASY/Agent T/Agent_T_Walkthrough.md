@@ -66,7 +66,7 @@ tmp
 usr
 var
 
-$ cat /flag.txt 
+$ cat /flag.txt
 flag{4127d0530abf16d6d23973e3df8dbecb}
 ```
 
