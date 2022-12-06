@@ -34,7 +34,14 @@
 |[LFI](https://github.com/LNB283/THM/blob/main/EASY/LFI/LFI_Walkthrough.md)|Easy|
 |[Lazy Admin](https://github.com/LNB283/THM/blob/main/EASY/LazyAdmin/Lazy_Admin_Walkthrough.md)|Easy|
 |[flatline](https://github.com/LNB283/THM/blob/main/EASY/flatline/flatline_walkthrough.md)|Easy|
-|||
+|[Neighbour](https://github.com/LNB283/THM/blob/main/EASY/Neighbour/Neighbour_Walkthrough.md)|Easy|
+|[Atlas](https://github.com/LNB283/THM/blob/main/EASY/Atlas/Atlas_Walkthrough.md)|Easy|
+|[ColdBox:Easy](https://github.com/LNB283/THM/blob/main/EASY/ColdBox:Easy/ColdBox_Easy_Walkthrough.md)|Easy|
+|[Confidential](https://github.com/LNB283/THM/blob/main/EASY/Confidential/Confidential_walkthrough.md)|Easy|
+|[Epoch](https://github.com/LNB283/THM/blob/main/EASY/Epoch/Epoch_Walkthrough.md)|Easy|
+|[Print Nightmare Again](https://github.com/LNB283/THM/blob/main/EASY/Print_Nightmare_Again/Print_Nightmare_Again_walkthrough.md)|Easy|
+|[Tech Support](https://github.com/LNB283/THM/blob/main/EASY/Tech_Support/Tech_Support_Walkthrough.md)|Easy|
+|[b3dr0ck](https://github.com/LNB283/THM/blob/main/EASY/b3dr0ck/b3dr0ck_walkthrough.md)|Easy|
 |||
 |||
 |[Attacktive Directory](https://github.com/LNB283/THM/blob/main/MEDIUM/Attacktive%20Directory/Attacktive_Directory_Walkthrough.md)|Medium|
