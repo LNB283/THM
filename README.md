@@ -43,8 +43,8 @@
 |[Chronicle](https://github.com/LNB283/THM/blob/main/MEDIUM/Chronicle/Chronicle_Walkthrough.md)|Medium|
 |[Oh My Server](https://github.com/LNB283/THM/blob/main/MEDIUM/OhMyServer/OhMyServer_Walkthroug.md)|Medium|
 |[CTF Vol.2](https://github.com/LNB283/THM/blob/main/MEDIUM/CTF_Collection_Vol2/CTF_Collection_Vol2_Walkthrough.md)|Medium|
-|||
-|||
+|[Linux agency](https://github.com/LNB283/THM/blob/main/MEDIUM/LinuxAgency/LinuxAgency_walkthrough.md)|Medium|
+|[Zeno](https://github.com/LNB283/THM/blob/main/MEDIUM/Zeno/Zeno_Walkthrough.md)|Medium|
 |||
 |[Daily Buggle](https://github.com/LNB283/THM/blob/main/HARD/Daily%20Bugle/Daily_Bugle_Walkthrough.md)|Hard|
 |[Internal](https://github.com/LNB283/THM/blob/main/HARD/Internal/Internal_Wlakthrough.md)|Hard|
