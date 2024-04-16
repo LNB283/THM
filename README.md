@@ -41,7 +41,7 @@
 |[Epoch](https://github.com/LNB283/THM/blob/main/EASY/Epoch/Epoch_Walkthrough.md)|Easy|
 |[Print Nightmare Again](https://github.com/LNB283/THM/blob/main/EASY/Print_Nightmare_Again/Print_Nightmare_Again_walkthrough.md)|Easy|
 |[Tech Support](https://github.com/LNB283/THM/blob/main/EASY/Tech_Support/Tech_Support_Walkthrough.md)|Easy|
-|[b3dr0ck](https://github.com/LNB283/THM/blob/main/EASY/b3dr0ck/b3dr0ck_walkthrough.md)|Easy|
+|[b3dr0ck](https://github.com/LNB283/THM/blob/main/EASY/b3dr0ck/b3dr0ck_walkthrough.md)|Medium|
 |||
 |||
 |[Attacktive Directory](https://github.com/LNB283/THM/blob/main/MEDIUM/Attacktive%20Directory/Attacktive_Directory_Walkthrough.md)|Medium|
